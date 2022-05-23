@@ -1,0 +1,57 @@
+<div id="field-details-form">
+  <form id="csharp-field-details-form">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput type="text">
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <mat-label>Data Type</mat-label>
+      <input matInput type="text">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Comment</mat-label>
+      <input matInput type="text">
+    </mat-form-field>
+
+    <mat-accordion multi="true">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Getter</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="expansion-panel-body-div">
+          <mat-form-field>
+            <mat-label>Getter Name</mat-label>
+            <input type="text" matInput>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Attributes</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Setter</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="expansion-panel-body-div">
+          <mat-form-field>
+            <mat-label>Setter Name</mat-label>
+            <input type="text" matInput>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Attributes</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </form>
+</div>

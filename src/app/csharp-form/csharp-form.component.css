@@ -1,0 +1,26 @@
+#field-details-form {
+  border: 1px solid red;
+
+  height: 100vh;
+  max-height: 100vh;
+
+  overflow-y: scroll;
+}
+
+#csharp-field-details-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+  align-items: center;
+  justify-content: center;
+
+  max-height: inherit;
+  height: inherit;
+}
+
+
+.expansion-panel-body-div {
+  display: flex;
+  flex-direction: column;
+}
