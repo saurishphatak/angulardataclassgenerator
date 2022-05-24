@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { FormComponent } from '../Interfaces/FormComponent';
 
 @Component({
   selector: 'app-csharp-form',
   templateUrl: './csharp-form.component.html',
   styleUrls: ['./csharp-form.component.css']
 })
-export class CsharpFormComponent implements OnInit {
+export class CsharpFormComponent implements OnInit, FormComponent {
 
   formGroup = new FormGroup(
     {

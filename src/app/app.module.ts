@@ -10,11 +10,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CsharpFormComponent } from './csharp-form/csharp-form.component';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FieldDetailsFormHostDirective } from './field-details-form-host.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CsharpFormComponent
+    CsharpFormComponent,
+    FieldDetailsFormHostDirective
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,25 @@
 <div id="parent">
   <div id="class-details-div">
     Class Details
+
+    <!--
+      Buttons that let you select the programming
+      language
+     -->
+    <button type="button" mat-flat-button color="primary"
+      (click)="this.createFieldDetailsFormComponent('csharp')">C#</button>
+
+    <button type="button" mat-flat-button color="primary">TypeScript</button>
   </div>
 
   <div id="field-details-form-div">
     Field Details Form
 
-    <app-csharp-form></app-csharp-form>
+    <!--
+      Container for field details form component
+      rendered dynamically
+     -->
+    <ng-template appFieldDetailsFormHost></ng-template>
   </div>
 
   <div div="field-details-list-div">
