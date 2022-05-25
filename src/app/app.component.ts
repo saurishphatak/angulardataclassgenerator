@@ -1,4 +1,5 @@
 import { Component, Type, ViewChild } from '@angular/core';
+import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csharp-field-details-list.component';
 import { CsharpFormComponent } from './csharp-form/csharp-form.component';
 import { FieldDetailsFormHostDirective } from './field-details-form-host.directive';
 import { FormComponent } from './Interfaces/FormComponent';
@@ -12,10 +13,18 @@ export class AppComponent {
   title = 'common-service-demo';
 
   // Map that holds a key-value pair of
-  // language to its component
-  languageMap = new Map<string, Type<FormComponent>>(
+  // language to its field details form component
+  languageFieldDetailsFormComponentMap = new Map<string, Type<FormComponent>>(
     [
       ["csharp", CsharpFormComponent]
+    ]
+  );
+
+  // Map that holds a key-value pair of
+  // language to its field details list component
+  languageFieldDetailsListComponent = new Map<string, Type<Object>>(
+    [
+      ["csharp", CsharpFieldDetailsListComponent]
     ]
   );
 
@@ -28,17 +37,15 @@ export class AppComponent {
   createFieldDetailsFormComponent(language: string) {
     language = language.toLowerCase();
 
-    if (this.languageMap.has(language)) {
-
-      console.log(this.fieldDetailsFormHostDirective.viewContainerRef);
-
-      // Get the component
-      let formComponent = this.languageMap.get('csharp');
+    // Create the form component and the list component
+    if (this.languageFieldDetailsFormComponentMap.has(language)) {
+      // Get the form component
+      let formComponent = this.languageFieldDetailsFormComponentMap.get(language);
 
       // Clear the host
       this.fieldDetailsFormHostDirective.viewContainerRef.clear();
 
-      // Create a new component
+      // Create a new form component
       let formComponentRef = this.fieldDetailsFormHostDirective.viewContainerRef.createComponent(formComponent!);
     }
   }

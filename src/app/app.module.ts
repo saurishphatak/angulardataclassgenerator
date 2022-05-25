@@ -12,12 +12,16 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldDetailsFormHostDirective } from './field-details-form-host.directive';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { FieldDetailsListHostDirective } from './field-details-list-host.directive';
+import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csharp-field-details-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CsharpFormComponent,
-    FieldDetailsFormHostDirective
+    FieldDetailsFormHostDirective,
+    FieldDetailsListHostDirective,
+    CsharpFieldDetailsListComponent
   ],
   imports: [
     BrowserModule,
