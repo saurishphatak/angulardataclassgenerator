@@ -11,6 +11,7 @@ import { CsharpFormComponent } from './csharp-form/csharp-form.component';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldDetailsFormHostDirective } from './field-details-form-host.directive';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { FieldDetailsFormHostDirective } from './field-details-form-host.directi
     MatFormFieldModule,
     MatExpansionModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatButtonToggleModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }

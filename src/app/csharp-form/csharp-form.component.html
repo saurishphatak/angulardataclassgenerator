@@ -1,26 +1,50 @@
 <div id="field-details-form">
   <form id="csharp-field-details-form" [formGroup]="formGroup">
+    <!-- Field Name -->
     <mat-form-field>
       <mat-label>Name</mat-label>
-      <input matInput type="text" formControlName="fieldName">
+      <input matInput type="text" formControlName="name">
     </mat-form-field>
 
+    <!-- Field Data Type -->
     <mat-form-field>
       <mat-label>Data Type</mat-label>
-      <input matInput type="text" formControlName="fieldDataType">
+      <input matInput type="text" formControlName="dataType">
     </mat-form-field>
 
+    <!-- Field Comment -->
     <mat-form-field>
       <mat-label>Comment</mat-label>
-      <input matInput type="text" formControlName="fieldComment">
+      <input matInput type="text" formControlName="comment">
     </mat-form-field>
 
-    <div id="getter-setter-init-button-div">
-      <button id="getter-enable-button" mat-raised-button (click)="test()" #getterButton>Getter</button>
-      <button mat-raised-button (click)="this.isSetterEnabled = !this.isSetterEnabled">Setter</button>
-      <button mat-raised-button (click)="this.isInitEnabled = !this.isInitEnabled">Init</button>
+    <!-- Field Access Modifier Button Group -->
+    <mat-card>
+      <mat-card-subtitle>Access Modifier</mat-card-subtitle>
+      <mat-card-content>
+        <mat-button-toggle-group>
+          <!-- Public -->
+          <mat-button-toggle checked (click)="this.toggleAccessModifier('public')">public</mat-button-toggle>
+          <mat-button-toggle (click)="this.toggleAccessModifier('private')">private</mat-button-toggle>
+          <mat-button-toggle (click)="this.toggleAccessModifier('protected')">protected</mat-button-toggle>
+        </mat-button-toggle-group>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Properties Selector Button Group -->
+    <div id="getter-setter-init-button-group-div">
+      <!--
+      Buttons for selecting the getter, setter and init
+     -->
+      <mat-button-toggle [checked]="this.isGetterEnabled" (click)="this.toggleGetter()">Getter</mat-button-toggle>
+      <mat-button-toggle [checked]="this.isSetterEnabled" (click)="this.toggleSetter()">Setter</mat-button-toggle>
+      <mat-button-toggle [checked]="this.isInitEnabled" (click)="this.toggleInitializer()">Init</mat-button-toggle>
     </div>
+
+
+    <!-- Properties Details Form -->
     <mat-accordion multi="true">
+      <!-- Getter -->
       <mat-expansion-panel *ngIf="this.isGetterEnabled">
         <mat-expansion-panel-header>
           <mat-panel-title>Getter</mat-panel-title>
@@ -29,17 +53,18 @@
         <div class="expansion-panel-body-div">
           <mat-form-field>
             <mat-label>Getter Name</mat-label>
-            <input type="text" matInput formControlName="fieldGetterName">
+            <input type="text" matInput formControlName="getterName">
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Attributes</mat-label>
-            <textarea matInput formControlName="fieldGetterAttributes"></textarea>
+            <textarea matInput formControlName="getterAttributes"></textarea>
           </mat-form-field>
         </div>
       </mat-expansion-panel>
 
-      <mat-expansion-panel [hidden]="this.isSetterEnabled">
+      <!-- Setter -->
+      <mat-expansion-panel *ngIf="this.isSetterEnabled">
         <mat-expansion-panel-header>
           <mat-panel-title>Setter</mat-panel-title>
         </mat-expansion-panel-header>
@@ -47,16 +72,37 @@
         <div class="expansion-panel-body-div">
           <mat-form-field>
             <mat-label>Setter Name</mat-label>
-            <input type="text" matInput formControlName="fieldSetterName">
+            <input type="text" matInput formControlName="setterName">
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Attributes</mat-label>
-            <textarea matInput formControlName="fieldSetterAttributes"></textarea>
+            <textarea matInput formControlName="setterAttributes"></textarea>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+
+      <!-- Initializer -->
+      <mat-expansion-panel *ngIf="this.isInitEnabled">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Initializer</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="expansion-panel-body-div">
+          <mat-form-field>
+            <mat-label>Initializer Name</mat-label>
+            <input matInput formControlName="initializerName">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Attributes</mat-label>
+            <textarea matInput formControlName="initializerAttributes"></textarea>
           </mat-form-field>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
+
+
   </form>
   <button id="add-field-button" (click)="onAddField()" type="button" mat-raised-button color="primary">Add</button>
 </div>
