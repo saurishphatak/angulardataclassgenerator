@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CsharpService } from '../csharp.service';
 import { FormComponent } from '../Interfaces/FormComponent';
+import { CsharpField } from '../Models/CsharpField';
 
 @Component({
   selector: 'app-csharp-form',
@@ -13,16 +15,28 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   // details of a csharp field
   formGroup = new FormGroup(
     {
-      name: new FormControl(),
-      dataType: new FormControl(),
+      name: new FormControl('', Validators.required),
+      dataType: new FormControl('', Validators.required),
       comment: new FormControl(''),
-      getterName: new FormControl(),
-      getterAttributes: new FormControl(),
-      setterName: new FormControl(),
-      setterAttributes: new FormControl(),
-      initializerName: new FormControl(),
-      initializerAttributes: new FormControl(),
-      accessModifier: new FormControl('public')
+      accessModifier: new FormControl('public'),
+
+      getterForm: new FormGroup({
+        getterName: new FormControl(''),
+        getterAttributes: new FormControl('')
+      }
+      ),
+
+      setterForm: new FormGroup({
+        setterName: new FormControl(''),
+        setterAttributes: new FormControl('')
+      }
+      ),
+
+      initializerForm: new FormGroup({
+        initializerName: new FormControl(''),
+        initializerAttributes: new FormControl('')
+      }
+      )
     }
   );
 
@@ -31,22 +45,46 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   isInitEnabled = false;
 
 
-  constructor() { }
+  constructor(
+    public csharpService: CsharpService
+  ) { }
 
   ngOnInit(): void {
   }
 
   // Handler for field details submission
   onAddField() {
-    // Get the value of the form
-    let values = this.formGroup.value;
+    // Only if all the validators are true, print the field
+    let name = this.formGroup.get('name');
+    let dataType = this.formGroup.get('dataType');
 
-    console.log(values);
+    if (!name?.errors && !dataType?.errors) {
+      let properties = new Map<string, any>();
+      properties.set("getter", this.formGroup.get("getterForm")?.value);
+      properties.set("setter", this.formGroup.get("setterForm")?.value);
+      properties.set("initializer", this.formGroup.get("initializerForm")?.value);
 
-    // Reset the value of the form
-    this.formGroup.reset({ accessModifier: 'public' });
+      let csharpField = new CsharpField(
+        name?.value,
+        dataType?.value,
+        this.formGroup.get("comment")?.value,
+        this.formGroup.get("accessModifier")?.value,
+        properties
+      );
+
+      console.log(csharpField);
+    }
+
   }
 
+
+  // Resets the form to the original state
+  resetForm() {
+
+    this.formGroup.reset({ accessModifier: 'public' });
+    this.isGetterEnabled = this.isSetterEnabled = this.isInitEnabled = false;
+
+  }
   // Toggles whether setter form is to be
   // displayed or not
   toggleSetter() {
@@ -66,6 +104,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   toggleGetter() {
     this.isGetterEnabled = !this.isGetterEnabled;
   }
+
   toggleAccessModifier(accessModifier: string) {
     let accessModifierFormControl = this.formGroup.get("accessModifier");
 
