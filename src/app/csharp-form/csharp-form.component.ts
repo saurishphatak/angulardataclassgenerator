@@ -19,24 +19,14 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       dataType: new FormControl('', Validators.required),
       comment: new FormControl(''),
       accessModifier: new FormControl('public'),
+      propertyName: new FormControl('', Validators.required),
+      propertyType: new FormControl('virtual'),
 
-      getterForm: new FormGroup({
-        getterName: new FormControl(''),
-        getterAttributes: new FormControl('')
-      }
-      ),
+      getterAttributes: new FormControl(''),
 
-      setterForm: new FormGroup({
-        setterName: new FormControl(''),
-        setterAttributes: new FormControl('')
-      }
-      ),
+      setterAttributes: new FormControl(''),
 
-      initializerForm: new FormGroup({
-        initializerName: new FormControl(''),
-        initializerAttributes: new FormControl('')
-      }
-      )
+      initializerAttributes: new FormControl(''),
     }
   );
 
@@ -44,39 +34,45 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   isSetterEnabled = false;
   isInitEnabled = false;
 
+  // Whether to properties configuration controls
+  showPropertyConfig = false;
+  showPropertyConfigButton = true;
+
+  propertyConfigButtonColor = "primary";
+  propertyConfigButtonText = "Configure Property";
 
   constructor(
     public csharpService: CsharpService
   ) { }
 
   ngOnInit(): void {
+    this.toggleAccessModifier('public');
   }
 
   // Handler for field details submission
   onAddField() {
-    // Only if all the validators are true, print the field
-    let name = this.formGroup.get('name');
-    let dataType = this.formGroup.get('dataType');
+    // Name and DataType of a field are required
+    let nameFormControl = this.formGroup.get('name');
+    let dataTypeFormControl = this.formGroup.get('dataType');
+    let propertyNameFormControl = this.formGroup.get('propertyName');
 
-    if (!name?.errors && !dataType?.errors) {
-      let properties = new Map<string, any>();
-      properties.set("getter", this.formGroup.get("getterForm")?.value);
-      properties.set("setter", this.formGroup.get("setterForm")?.value);
-      properties.set("initializer", this.formGroup.get("initializerForm")?.value);
+    if (!nameFormControl?.errors && !dataTypeFormControl?.errors) {
 
-      let csharpField = new CsharpField(
-        name?.value,
-        dataType?.value,
-        this.formGroup.get("comment")?.value,
-        this.formGroup.get("accessModifier")?.value,
-        properties
-      );
+      if (this.showPropertyConfig == false) {
+        console.log("Without", this.formGroup.value);
+      }
 
-      console.log(csharpField);
+      else {
+        let getterForm = this.formGroup.get("getterForm");
+        let setterForm = this.formGroup.get("setterForm");
+        let initializerForm = this.formGroup.get("initializerForm");
+
+        console.log(this.formGroup.value);
+      }
+
+
     }
-
   }
-
 
   // Resets the form to the original state
   resetForm() {
@@ -109,7 +105,34 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     let accessModifierFormControl = this.formGroup.get("accessModifier");
 
     if (accessModifierFormControl) {
+      // If accessModifer is public, don't show property config button
+      if ("public" == accessModifier) {
+        // Whenever accessModifier is public, any UI related
+        // to property config should be hidden
+        this.isGetterEnabled = this.isSetterEnabled = this.isInitEnabled = false;
+        this.showPropertyConfig = false;
+        this.showPropertyConfigButton = false;
+      }
+      else {
+        this.showPropertyConfigButton = true;
+        this.propertyConfigButtonColor = this.showPropertyConfig ? "warn" : "primary";
+      }
+
       accessModifierFormControl.setValue(accessModifier);
     }
   }
+
+  togglePropertyType(propertyType: string) {
+    let propertyTypeFormControl = this.formGroup.get("propertyType");
+
+    if (propertyTypeFormControl) {
+      propertyTypeFormControl.setValue(propertyType);
+    }
+  }
+
+  togglePropertyConfig(event: any) {
+    this.showPropertyConfig = !this.showPropertyConfig;
+    this.propertyConfigButtonColor = this.showPropertyConfig ? "warn" : "primary";
+  }
+
 }
