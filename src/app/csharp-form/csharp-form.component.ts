@@ -17,15 +17,13 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     {
       name: new FormControl('', Validators.required),
       dataType: new FormControl('', Validators.required),
+      defaultValue: new FormControl(''),
       comment: new FormControl(''),
       accessModifier: new FormControl('public'),
-      propertyName: new FormControl('', Validators.required),
+      propertyName: new FormControl(''),
       propertyType: new FormControl('virtual'),
-
       getterAttributes: new FormControl(''),
-
       setterAttributes: new FormControl(''),
-
       initializerAttributes: new FormControl(''),
     }
   );
@@ -37,7 +35,6 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   // Whether to properties configuration controls
   showPropertyConfig = false;
   showPropertyConfigButton = true;
-
   propertyConfigButtonColor = "primary";
   propertyConfigButtonText = "Configure Property";
 
@@ -54,33 +51,51 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     // Name and DataType of a field are required
     let nameFormControl = this.formGroup.get('name');
     let dataTypeFormControl = this.formGroup.get('dataType');
-    let propertyNameFormControl = this.formGroup.get('propertyName');
 
     if (!nameFormControl?.errors && !dataTypeFormControl?.errors) {
 
-      if (this.showPropertyConfig == false) {
-        console.log("Without", this.formGroup.value);
+      let accessors = new Map<string, any>();
+
+      let csharpField = new CsharpField(
+        nameFormControl?.value,
+        dataTypeFormControl?.value,
+        this.formGroup.get("defaultValue")?.value,
+        this.formGroup.get("comment")?.value,
+        this.formGroup.get("accessModifier")?.value,
+        this.formGroup.get("propertyName")?.value,
+        this.formGroup.get("propertyType")?.value,
+        accessors
+      );
+
+      // If the property is to be generated
+      if (this.showPropertyConfig == true) {
+        let getterAttributesFormControl = this.formGroup.get("getterAttribues")?.value;
+        let setterAttributesFormControl = this.formGroup.get("setterAttributes")?.value;
+        let initializerAttributesFormControl = this.formGroup.get("initializerAttributes")?.value;
+
+        accessors.set("getter", getterAttributesFormControl?.value);
+        accessors.set("setter", setterAttributesFormControl?.value);
+        accessors.set("initializer", initializerAttributesFormControl?.value);
       }
 
-      else {
-        let getterForm = this.formGroup.get("getterForm");
-        let setterForm = this.formGroup.get("setterForm");
-        let initializerForm = this.formGroup.get("initializerForm");
+      console.log(csharpField);
 
-        console.log(this.formGroup.value);
-      }
+      // Add the new field to the list
+      this.csharpService.addField(csharpField);
 
-
+      // Reset the form
+      this.resetForm();
     }
   }
 
   // Resets the form to the original state
   resetForm() {
 
-    this.formGroup.reset({ accessModifier: 'public' });
+    this.formGroup.reset({ accessModifier: 'public', propertyType: 'virtual' });
     this.isGetterEnabled = this.isSetterEnabled = this.isInitEnabled = false;
-
+    this.toggleAccessModifier('public');
   }
+
   // Toggles whether setter form is to be
   // displayed or not
   toggleSetter() {
@@ -122,6 +137,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     }
   }
 
+  // Toggles the property type (virtual/abstract)
   togglePropertyType(propertyType: string) {
     let propertyTypeFormControl = this.formGroup.get("propertyType");
 
@@ -130,6 +146,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     }
   }
 
+  // Toggles whether to show the property config UI
   togglePropertyConfig(event: any) {
     this.showPropertyConfig = !this.showPropertyConfig;
     this.propertyConfigButtonColor = this.showPropertyConfig ? "warn" : "primary";
