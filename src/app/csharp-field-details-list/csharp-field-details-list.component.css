@@ -1,5 +1,4 @@
-.field-detail-container {
+.field-details-content-div {
   display: flex;
-  flex-direction: row;
-  gap: 20px;
+  flex-direction: column;
 }

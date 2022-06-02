@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CsharpService } from '../csharp.service';
+import { CsharpField } from '../Models/CsharpField';
 
 @Component({
   selector: 'app-csharp-field-details-list',
@@ -7,26 +9,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CsharpFieldDetailsListComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public csharpService: CsharpService
+  ) { }
+
+  private className = "CsharpFieldDetailsListComponent";
+  private debug = console.log;
 
   ngOnInit(): void {
   }
 
-  // Temporarily holds a list of the field
-  // details
-  fieldList: Map<string, object>[] = [
-  ];
-
   // Click on the edit button will not open the
   // expansion panel
-  editField(event: any) {
-    console.log(event.stopPropagation());
+  editField(event: any, id: number) {
+    this.debug(this.className + "::editField()", { id });
 
-    console.log("edit");
-  }
+    // Emit the id to the csharp service to get the
+    // field updated
+    this.csharpService.updateField(id);
 
-  removeField(event: any) {
+    // Stop the event from propogating further and expanding
+    // the expansion panel
     event.stopPropagation();
-    console.log("remove");
   }
+
+  removeField(event: any, id: number) {
+    this.debug(this.className + "::removeField()", { id });
+
+    let removedField = this.csharpService.removeField(id);
+
+    this.debug(this.className + "::removeField()", { removedField });
+
+    event.stopPropagation();
+  }
+
 }

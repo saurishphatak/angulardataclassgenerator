@@ -1,57 +1,96 @@
-<div id="field-details-list-div">
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <!-- Field Name -->
-        <mat-panel-title>{{ "dataType name" }}</mat-panel-title>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let field of this.csharpService.fields">
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ field.dataType + " " + field.name }}</mat-panel-title>
 
-        <button mat-raised-button color="primary" (click)="this.editField($event)">Edit</button>
-        <button mat-raised-button color="warn" (click)="this.removeField($event)">Remove</button>
-      </mat-expansion-panel-header>
+      <button type="button" mat-raised-button color="primary" (click)="this.editField($event, field.id)">Edit</button>
+      <button type="button" mat-raised-button color="warn" (click)="this.removeField($event, field.id)">Remove</button>
+    </mat-expansion-panel-header>
 
+    <div class="field-details-content-div">
+      <!-- Name -->
       <mat-form-field>
-        <mat-label>Comment</mat-label>
-        <input type="text" matInput disabled value="">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput [value]="field.name" disabled>
       </mat-form-field>
 
+      <!-- Data Type -->
+      <mat-form-field>
+        <mat-label>Data Type</mat-label>
+        <input type="text" matInput [value]="field.dataType" disabled>
+      </mat-form-field>
 
-      <!-- Getter - Setter - Init Details -->
-      <mat-accordion multi="true">
-        <!-- Getter Details -->
+      <!-- Default Value -->
+      <mat-form-field *ngIf="field.defaultValue.length > 0">
+        <mat-label>Default Value</mat-label>
+        <input type="text" matInput [value]="field.defaultValue" disabled>
+      </mat-form-field>
+
+      <!-- Comment -->
+      <mat-form-field *ngIf="field.comment.length > 0">
+        <mat-label>Comment</mat-label>
+        <input type="text" matInput [value]="field.comment" disabled="">
+      </mat-form-field>
+
+      <!-- Field Access Modifier -->
+      <mat-form-field>
+        <mat-label>Field Access Modifier</mat-label>
+        <input type="text" matInput [value]="field.accessModifier" disabled>
+      </mat-form-field>
+
+      <!-- Property Details Accordion -->
+      <mat-accordion *ngIf="field.propertyName.length > 0">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title>Getter</mat-panel-title>
+            <mat-panel-title>Property</mat-panel-title>
+            <mat-panel-description>{{ field.propertyName }}</mat-panel-description>
           </mat-expansion-panel-header>
 
+          <!-- Property Name -->
           <mat-form-field>
-            <mat-label>Getter Name</mat-label>
-            <input type="text" matInput disabled="" value="">
+            <mat-label>Property Name</mat-label>
+            <input type="text" matInput [value]="field.propertyName" disabled>
           </mat-form-field>
 
+          <!-- Property Type -->
           <mat-form-field>
-            <mat-label>Attributes</mat-label>
-            <textarea matInput disabled="" value=""></textarea>
-          </mat-form-field>
-        </mat-expansion-panel>
-
-        <!-- Setter Details -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Setter</mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <mat-form-field>
-            <mat-label>Setter Name</mat-label>
-            <input type="text" matInput disabled="" value="dkjfhas">
+            <mat-label>Property Type (virtual/abstract)</mat-label>
+            <input type="text" matInput [value]="field.propertyType" disabled>
           </mat-form-field>
 
-          <mat-form-field>
-            <mat-label>Attributes</mat-label>
-            <textarea matInput disabled="" value="ajaja"></textarea>
-          </mat-form-field>
+          <!-- Accessor Details Accordion -->
+          <mat-accordion *ngIf="field.accessors.size > 0">
+            <!-- Getter Accessor Details -->
+            <mat-expansion-panel>
+              <!-- Getter Accessor Details -->
+              <mat-expansion-panel-header>
+                <mat-panel-title>Getter</mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <textarea matInput [value]="field.accessors.get('getter')?.getterAttributes"></textarea>
+            </mat-expansion-panel>
+
+            <!-- Setter Accessor Details -->
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Setter</mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <textarea matInput [value]="field.accessors.get('setter')?.setterAttributes">Something</textarea>
+            </mat-expansion-panel>
+
+            <!-- Initializer Accessor Details -->
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Initializer</mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <textarea matInput [value]="field.accessors.get('initializer')?.initializerAttributes"></textarea>
+            </mat-expansion-panel>
+
+          </mat-accordion>
         </mat-expansion-panel>
       </mat-accordion>
-
-    </mat-expansion-panel>
-  </mat-accordion>
-</div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
