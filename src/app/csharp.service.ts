@@ -22,7 +22,7 @@ export class CsharpService implements IFieldDetailsService {
       "virtual",
       new Map<string, any>(
         [
-          ["getter", "[Required]"]
+          ["getter", { getterAttributes: "[Required]" }]
         ]
       ),
     ),
@@ -36,7 +36,7 @@ export class CsharpService implements IFieldDetailsService {
       "virtual",
       new Map<string, any>(
         [
-          ["getter", "[Required]"]
+          ["setter", { setterAttributes: "[Required]" }],
         ]
       ),
     ),
