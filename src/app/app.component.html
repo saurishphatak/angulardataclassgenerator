@@ -6,19 +6,24 @@
       Buttons that let you select the programming
       language
      -->
-    <button type="button" mat-flat-button color="primary"
-      (click)="this.createFieldDetailsFormComponent('csharp')">C#</button>
+    <div id="language-selection-buttons-div">
+      <button type="button" mat-raised-button color="primary"
+        (click)="this.createFieldDetailsFormComponent('csharp')">Csharp</button>
 
-    <button type="button" mat-flat-button color="primary">TypeScript</button>
+      <button type="button" mat-raised-button color="primary"
+        (click)="this.createFieldDetailsFormComponent('typescript')">TypeScript</button>
+    </div>
+
   </div>
 
   <div id="field-details-form-div">
-
-    <!--
-      Container for field details form component
-      rendered dynamically
-     -->
-    <ng-template appFieldDetailsFormHost></ng-template>
+    <div id="scroll-container">
+      <!--
+        Container for field details form component
+        rendered dynamically
+      -->
+      <ng-template appFieldDetailsFormHost></ng-template>
+    </div>
   </div>
 
   <div id="field-details-list-div">

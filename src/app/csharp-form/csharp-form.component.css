@@ -6,17 +6,8 @@
   align-items: center;
   justify-content: center;
 
-  overflow-y: scroll;
+  border: solid 1px green;
 }
-
-
-.expansion-panel-body-div {
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-}
-
 
 #getter-setter-init-button-group-div {
   display: flex;

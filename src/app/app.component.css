@@ -8,12 +8,17 @@
 
 #field-details-form-div {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px red;
+}
 
-  /* border: 1px solid blue; */
-  height: 100vh;
+#scroll-container {
+  margin: auto;
   max-height: 100vh;
-  overflow-y: scroll;
+  overflow: auto;
+
+  border: 1px solid black;
 }
 
 #class-details-div {
@@ -28,4 +33,9 @@
   overflow-y: scroll;
   border: 2px solid black;
   padding: 10px;
+}
+
+#language-selection-buttons-div {
+  display: flex;
+  flex-direction: column;
 }
