@@ -46,7 +46,7 @@
     this.propertyConfigButtonText }}</button>
 
   <!-- Property Configurator -->
-  <form formGroupName="propertyFormGroup" *ngIf="this.showPropertyConfig" id="property-config-div">
+  <div *ngIf="this.showPropertyConfig" id="property-config-div" formGroupName="propertyForm">
     <!-- Property Name Field -->
     <mat-form-field>
       <mat-label>Property Name</mat-label>
@@ -55,12 +55,10 @@
 
     <!-- Property Type (virtual / abstract) -->
     <div>
-      <mat-button-toggle-group>
-        <mat-button-toggle [checked]="this.virtualButtonChecked" (click)="this.togglePropertyType('virtual')">virtual
-        </mat-button-toggle>
-        <mat-button-toggle [checked]="this.abstractButtonChecked" (click)="this.togglePropertyType('abstract')">abstract
-        </mat-button-toggle>
-      </mat-button-toggle-group>
+      <mat-button-toggle [checked]="this.virtualButtonChecked" (click)="this.togglePropertyType('virtual')">virtual
+      </mat-button-toggle>
+      <mat-button-toggle [checked]="this.abstractButtonChecked" (click)="this.togglePropertyType('abstract')">abstract
+      </mat-button-toggle>
     </div>
 
     <!-- Property Accessors -->
@@ -115,6 +113,6 @@
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-  </form>
+  </div>
   <button id="add-field-button" (click)="onAddField()" type="button" mat-raised-button color="primary">Add</button>
 </form>
