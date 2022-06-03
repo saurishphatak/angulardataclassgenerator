@@ -46,7 +46,7 @@
     this.propertyConfigButtonText }}</button>
 
   <!-- Property Configurator -->
-  <div *ngIf="this.showPropertyConfig" id="property-config-div">
+  <form formGroupName="propertyFormGroup" *ngIf="this.showPropertyConfig" id="property-config-div">
     <!-- Property Name Field -->
     <mat-form-field>
       <mat-label>Property Name</mat-label>
@@ -115,6 +115,6 @@
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-  </div>
+  </form>
   <button id="add-field-button" (click)="onAddField()" type="button" mat-raised-button color="primary">Add</button>
 </form>

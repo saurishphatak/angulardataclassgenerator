@@ -20,11 +20,16 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       defaultValue: new FormControl(''),
       comment: new FormControl(''),
       accessModifier: new FormControl('public'),
-      propertyName: new FormControl(''),
-      propertyType: new FormControl('virtual'),
-      getterAttributes: new FormControl(''),
-      setterAttributes: new FormControl(''),
-      initializerAttributes: new FormControl(''),
+
+      propertyFormGroup: new FormGroup(
+        {
+          propertyName: new FormControl(''),
+          propertyType: new FormControl('virtual'),
+          getterAttributes: new FormControl(''),
+          setterAttributes: new FormControl(''),
+          initializerAttributes: new FormControl('')
+        }
+      )
     }
   );
 
@@ -66,16 +71,8 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
           this.privateButtonChecked = this.protectedButtonChecked = false;
 
-          // The propertyName and accessorAttributes need to be wiped out
-          this.formGroup.patchValue(
-            {
-              propertyName: '',
-              propertyType: 'virtual',
-              getterAttributes: '',
-              setterAttributes: '',
-              initializerAttributes: ''
-            }
-          );
+          // Reset the propertyConfig form
+          this.resetPropertyConfigForm();
         }
       ],
       [
@@ -126,6 +123,10 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     let nameFormControl = this.formGroup.get('name');
     let dataTypeFormControl = this.formGroup.get('dataType');
 
+    // Get the propertyForm and the propertyName form control
+    let propertyFormGroup = this.formGroup.get('propertyFormGroup') as FormGroup;
+    let propertyNameFormControl = propertyFormGroup.get('propertyName');
+
     if (!nameFormControl?.errors && !dataTypeFormControl?.errors) {
 
       let accessors = new Map<string, any>();
@@ -136,17 +137,20 @@ export class CsharpFormComponent implements OnInit, FormComponent {
         this.formGroup.get("defaultValue")?.value ?? '',
         this.formGroup.get("comment")?.value ?? '',
         this.formGroup.get("accessModifier")?.value,
-        this.formGroup.get("propertyName")?.value,
-        this.formGroup.get("propertyType")?.value,
+        "",
+        "",
         accessors
       );
 
-      // If the property is to be generated
-      if (this.showPropertyConfig == true) {
+      // If the property is to be generated and the property name is given
+      if (this.showPropertyConfig == true && !propertyNameFormControl?.errors) {
+
+        let propertyTypeFormControl = propertyFormGroup.get('propertyType');
+
         // Get the getter, setter and initializer details
-        let getterAttributes = this.formGroup.get('getterAttributes')?.value;
-        let setterAttributes = this.formGroup.get('setterAttributes')?.value;
-        let initializerAttributes = this.formGroup.get('initializerAttributes')?.value;
+        let getterAttributes = propertyFormGroup.get('getterAttributes')?.value;
+        let setterAttributes = propertyFormGroup.get('setterAttributes')?.value;
+        let initializerAttributes = propertyFormGroup.get('initializerAttributes')?.value;
 
         if (getterAttributes?.length > 0)
           accessors.set('getter', { getterAttributes });
@@ -156,24 +160,40 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
         if (initializerAttributes?.length > 0)
           accessors.set('initializer', { initializerAttributes });
+
+        // Set the corresponding properties in the Csharp field object
+        csharpField.propertyName = propertyNameFormControl?.value;
+        csharpField.propertyType = propertyTypeFormControl?.value;
       }
 
       // Add the new field to the list
       this.csharpService.addField(csharpField);
 
       // Reset the form
-      this.resetForm();
+      this.resetCsharpForm();
     }
   }
 
-  // Resets the form to the original state
-  resetForm() {
+  // Resets the outer csharp form to the original state
+  resetCsharpForm() {
     // By default, the accessModifier and propertyType of a field will be virtual
     this.formGroup.reset({ accessModifier: 'public', propertyType: 'virtual' });
 
     // The toggler for 'public' accessModifier will take care of UI related
     // changes
     this.toggleAccessModifier('public');
+  }
+
+  // Resets the inner property config form to original state
+  resetPropertyConfigForm() {
+    let propertyFormGroup = this.formGroup.get("propertyFormGroup") as FormGroup;
+
+    // Reset its values
+    propertyFormGroup.reset(
+      {
+        propertyType: 'virtual'
+      }
+    );
   }
 
   // Patches form with the field details recieved from the
@@ -248,7 +268,11 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
   // Toggles whether to show the property config UI
   togglePropertyConfig(event: any) {
+    // Update the state of buttons
     this.showPropertyConfig = !this.showPropertyConfig;
     this.propertyConfigButtonColor = this.showPropertyConfig ? "warn" : "primary";
+
+    // Reset the propertyConfig form's values
+    this.resetPropertyConfigForm();
   }
 }
