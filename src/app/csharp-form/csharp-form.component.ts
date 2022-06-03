@@ -28,6 +28,8 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     }
   );
 
+  // Whether the getter, setter, initializer expansion panels
+  // are to be displayed
   isGetterEnabled = false;
   isSetterEnabled = false;
   isInitEnabled = false;
@@ -47,6 +49,9 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   privateButtonChecked = false;
   protectedButtonChecked = false;
 
+  // Maps accessModifier to a function that takes care
+  // of setting state related to propertyConfig that the particular
+  // accessModifier allows
   accessModifierButtonTogglerMap = new Map<string, Function>(
     [
       [
@@ -60,6 +65,17 @@ export class CsharpFormComponent implements OnInit, FormComponent {
           this.showPropertyConfigButton = false;
 
           this.privateButtonChecked = this.protectedButtonChecked = false;
+
+          // The propertyName and accessorAttributes need to be wiped out
+          this.formGroup.patchValue(
+            {
+              propertyName: '',
+              propertyType: 'virtual',
+              getterAttributes: '',
+              setterAttributes: '',
+              initializerAttributes: ''
+            }
+          );
         }
       ],
       [
@@ -117,8 +133,8 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       let csharpField = new CsharpField(
         nameFormControl?.value,
         dataTypeFormControl?.value,
-        this.formGroup.get("defaultValue")?.value,
-        this.formGroup.get("comment")?.value,
+        this.formGroup.get("defaultValue")?.value ?? '',
+        this.formGroup.get("comment")?.value ?? '',
         this.formGroup.get("accessModifier")?.value,
         this.formGroup.get("propertyName")?.value,
         this.formGroup.get("propertyType")?.value,
@@ -127,15 +143,19 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
       // If the property is to be generated
       if (this.showPropertyConfig == true) {
-        let getterAttributesFormControl = this.formGroup.get("getterAttributes");
-        let setterAttributesFormControl = this.formGroup.get("setterAttributes");
-        let initializerAttributesFormControl = this.formGroup.get("initializerAttributes");
+        // Get the getter, setter and initializer details
+        let getterAttributes = this.formGroup.get('getterAttributes')?.value;
+        let setterAttributes = this.formGroup.get('setterAttributes')?.value;
+        let initializerAttributes = this.formGroup.get('initializerAttributes')?.value;
 
-        console.log({ 'getter': getterAttributesFormControl, 'setter': setterAttributesFormControl, 'init': initializerAttributesFormControl });
+        if (getterAttributes?.length > 0)
+          accessors.set('getter', { getterAttributes });
 
-        accessors.set("getter", { getterAttributes: getterAttributesFormControl?.value });
-        accessors.set("setter", { setterAttributes: setterAttributesFormControl?.value });
-        accessors.set("initializer", { initializerAttributes: initializerAttributesFormControl?.value });
+        if (setterAttributes?.length > 0)
+          accessors.set('setter', { setterAttributes });
+
+        if (initializerAttributes?.length > 0)
+          accessors.set('initializer', { initializerAttributes });
       }
 
       // Add the new field to the list
@@ -148,8 +168,11 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
   // Resets the form to the original state
   resetForm() {
-
+    // By default, the accessModifier and propertyType of a field will be virtual
     this.formGroup.reset({ accessModifier: 'public', propertyType: 'virtual' });
+
+    // The toggler for 'public' accessModifier will take care of UI related
+    // changes
     this.toggleAccessModifier('public');
   }
 
@@ -199,6 +222,8 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     this.isGetterEnabled = !this.isGetterEnabled;
   }
 
+  // Toggles the access modifier for the field
+  // and changes UI according to it
   toggleAccessModifier(accessModifier: string) {
     let accessModifierFormControl = this.formGroup.get("accessModifier");
 
@@ -226,5 +251,4 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     this.showPropertyConfig = !this.showPropertyConfig;
     this.propertyConfigButtonColor = this.showPropertyConfig ? "warn" : "primary";
   }
-
 }
