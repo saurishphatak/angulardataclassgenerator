@@ -29,9 +29,12 @@
     <mat-card-content>
       <mat-button-toggle-group>
         <!-- Public -->
-        <mat-button-toggle checked (click)="this.toggleAccessModifier('public')">public</mat-button-toggle>
-        <mat-button-toggle (click)="this.toggleAccessModifier('private')">private</mat-button-toggle>
-        <mat-button-toggle (click)="this.toggleAccessModifier('protected')">protected</mat-button-toggle>
+        <mat-button-toggle [checked]="this.publicButtonChecked" (click)="this.toggleAccessModifier('public')">public
+        </mat-button-toggle>
+        <mat-button-toggle [checked]="this.privateButtonChecked" (click)="this.toggleAccessModifier('private')">private
+        </mat-button-toggle>
+        <mat-button-toggle [checked]="this.protectedButtonChecked" (click)="this.toggleAccessModifier('protected')">
+          protected</mat-button-toggle>
       </mat-button-toggle-group>
     </mat-card-content>
   </mat-card>
@@ -53,8 +56,10 @@
     <!-- Property Type (virtual / abstract) -->
     <div>
       <mat-button-toggle-group>
-        <mat-button-toggle checked (click)="this.togglePropertyType('virtual')">virtual</mat-button-toggle>
-        <mat-button-toggle (click)="this.togglePropertyType('abstract')">abstract</mat-button-toggle>
+        <mat-button-toggle [checked]="this.virtualButtonChecked" (click)="this.togglePropertyType('virtual')">virtual
+        </mat-button-toggle>
+        <mat-button-toggle [checked]="this.abstractButtonChecked" (click)="this.togglePropertyType('abstract')">abstract
+        </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
 

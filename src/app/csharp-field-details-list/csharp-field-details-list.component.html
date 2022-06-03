@@ -21,13 +21,13 @@
       </mat-form-field>
 
       <!-- Default Value -->
-      <mat-form-field *ngIf="field.defaultValue.length > 0">
+      <mat-form-field *ngIf="field.defaultValue">
         <mat-label>Default Value</mat-label>
         <input type="text" matInput [value]="field.defaultValue" readonly>
       </mat-form-field>
 
       <!-- Comment -->
-      <mat-form-field *ngIf="field.comment.length > 0">
+      <mat-form-field *ngIf="field.comment">
         <mat-label>Comment</mat-label>
         <input type="text" matInput [value]="field.comment" readonly>
       </mat-form-field>
@@ -39,7 +39,7 @@
       </mat-form-field>
 
       <!-- Property Details Accordion -->
-      <mat-accordion *ngIf="field.propertyName.length > 0">
+      <mat-accordion *ngIf="field.propertyName">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>Property</mat-panel-title>
