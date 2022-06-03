@@ -47,7 +47,6 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   showPropertyConfig = false;
   showPropertyConfigButton = true;
   propertyConfigButtonColor = "primary";
-  propertyConfigButtonText = "Configure Property";
 
   // Button active status for property type
   virtualButtonChecked = true;
@@ -73,6 +72,10 @@ export class CsharpFormComponent implements OnInit, FormComponent {
           this.showPropertyConfigButton = false;
 
           this.privateButtonChecked = this.protectedButtonChecked = false;
+
+          // Reset the property form as a public field
+          // does not need to have property
+          this.resetPropertyForm();
         }
       ],
       [
@@ -103,24 +106,6 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       ]
     ]
   );
-
-  propertyTypeTogglerMap = new Map<string, Function>(
-    [
-      [
-        'virtual', () => {
-          this.virtualButtonChecked = true;
-          this.abstractButtonChecked = false;
-        }
-      ],
-
-      [
-        'abstract', () => {
-          this.abstractButtonChecked = true;
-          this.virtualButtonChecked = false;
-        }
-      ]
-    ]
-  )
 
   constructor(
     public csharpService: CsharpService
@@ -202,6 +187,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     this.toggleAccessModifier('public');
   }
 
+  // Resets the property form to the original state
   resetPropertyForm() {
     let propertyForm = this.formGroup.get('propertyForm') as FormGroup;
 
@@ -214,6 +200,8 @@ export class CsharpFormComponent implements OnInit, FormComponent {
         initializerAttributes: ''
       }
     );
+
+    this.togglePropertyType('virtual');
   }
 
   // Patches the form with the field details recieved from the
@@ -221,6 +209,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   patchForm(field: CsharpField) {
     this.debug(this.className + "::patchCsharpForm()", field);
 
+    // Set the value of the form according to the field
     this.formGroup.setValue(
       {
         name: field?.name,
@@ -233,21 +222,28 @@ export class CsharpFormComponent implements OnInit, FormComponent {
         {
           propertyName: field?.propertyName ?? "",
           propertyType: field?.propertyType ?? "",
-          getterAttributes: 'Required',
-          setterAttributes: 'Required',
-          initializerAttributes: 'Required'
+          getterAttributes: field?.accessors.get('getter')?.getterAttributes ?? "",
+          setterAttributes: field?.accessors.get('setter')?.setterAttributes ?? "",
+          initializerAttributes: field?.accessors.get('initializer')?.initializerAttributes ?? ""
         }
-
       }
     );
 
+    // Update the UI based on the field
     this.toggleAccessModifier(field?.accessModifier);
     this.virtualButtonChecked = field?.propertyType == 'virtual' ? true : false;
     this.abstractButtonChecked = field?.propertyType == 'abstract' ? true : false;
 
-    console.log(this.formGroup.value);
+    if (field?.propertyName?.length > 0) {
+      this.showPropertyConfig = true;
+      this.showPropertyConfigButton = true;
+      this.propertyConfigButtonColor = "warn";
+    }
+
   }
 
+  //! TODO : If setter is clicked, it should wipe out initializer attributes
+  //!        vice versa
   // Toggles whether setter form is to be
   // displayed or not
   toggleSetter() {
@@ -288,8 +284,6 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     let propertyTypeFormControl = this.formGroup.get("propertyForm.propertyType");
 
     if (propertyTypeFormControl) {
-      this.propertyTypeTogglerMap.get(propertyType)?.call(this);
-
       propertyTypeFormControl.setValue(propertyType);
     }
   }
@@ -301,6 +295,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     this.propertyConfigButtonColor = this.showPropertyConfig ? "warn" : "primary";
 
     // Reset the propertyName, propertyType and accessorAttributes
+    // if the user doesn't want to configure property
     if (!this.showPropertyConfig) {
       this.resetPropertyForm();
 

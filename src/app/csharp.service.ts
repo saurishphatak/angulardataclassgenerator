@@ -18,21 +18,17 @@ export class CsharpService implements IFieldDetailsService {
       "",
       "",
       "public",
-      "CustomerName",
+      "",
       "virtual",
-      new Map<string, any>(
-        [
-          ["getter", { getterAttributes: "[Required]" }]
-        ]
-      ),
+      new Map<string, any>()
     ),
     new CsharpField(
-      "customerName",
+      "phoneNumber",
       "string",
       "",
-      "",
-      "public",
-      "CustomerName",
+      "Customer phone number",
+      "private",
+      "PhoneNumber",
       "virtual",
       new Map<string, any>(
         [
@@ -41,13 +37,13 @@ export class CsharpService implements IFieldDetailsService {
       ),
     ),
     new CsharpField(
-      "customerName",
+      "addres",
       "string",
       "",
       "",
-      "public",
-      "CustomerName",
-      "virtual",
+      "protected",
+      "Address",
+      "abstract",
       new Map<string, any>(
         [
           ["getter", "[Required]"]

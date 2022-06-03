@@ -42,8 +42,7 @@
 
   <!-- Whether to configure property and accessors -->
   <button type="button" *ngIf="this.showPropertyConfigButton" mat-raised-button [color]="this.propertyConfigButtonColor"
-    (click)="this.togglePropertyConfig($event)">{{
-    this.propertyConfigButtonText }}</button>
+    (click)="this.togglePropertyConfig($event)">Configure Property</button>
 
   <!-- Property Configurator -->
   <div *ngIf="this.showPropertyConfig" id="property-config-div" formGroupName="propertyForm">
@@ -55,10 +54,12 @@
 
     <!-- Property Type (virtual / abstract) -->
     <div>
-      <mat-button-toggle [checked]="this.virtualButtonChecked" (click)="this.togglePropertyType('virtual')">virtual
-      </mat-button-toggle>
-      <mat-button-toggle [checked]="this.abstractButtonChecked" (click)="this.togglePropertyType('abstract')">abstract
-      </mat-button-toggle>
+      <mat-button-toggle-group>
+        <mat-button-toggle [checked]="this.virtualButtonChecked" (click)="this.togglePropertyType('virtual')">virtual
+        </mat-button-toggle>
+        <mat-button-toggle [checked]="this.abstractButtonChecked" (click)="this.togglePropertyType('abstract')">abstract
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </div>
 
     <!-- Property Accessors -->
