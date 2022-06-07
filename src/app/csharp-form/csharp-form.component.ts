@@ -65,18 +65,9 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     [
       [
         'public', () => {
-          this.publicButtonChecked = true;
-
-          // Whenever accessModifier is public, any UI related
-          // to property config should be hidden
-          this.showPropertyConfig = false;
-          this.showPropertyConfigButton = false;
+          this.publicButtonChecked = true
 
           this.privateButtonChecked = this.protectedButtonChecked = false;
-
-          // Reset the property form as a public field
-          // does not need to have property
-          this.resetPropertyForm();
         }
       ],
       [
@@ -229,6 +220,11 @@ export class CsharpFormComponent implements OnInit, FormComponent {
         initializerAttributes: ''
       }
     );
+
+    // Update the UI
+    this.virtualButtonChecked = true;
+    this.abstractButtonChecked = false;
+    this.isGetterEnabled = this.isSetterEnabled = this.isInitEnabled = false;
 
     this.togglePropertyType('virtual');
   }
