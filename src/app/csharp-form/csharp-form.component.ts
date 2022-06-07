@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CsharpService } from '../csharp.service';
@@ -27,7 +28,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
       propertyForm: new FormGroup(
         {
-          propertyName: new FormControl(''),
+          propertyName: new FormControl('', Validators.required),
           propertyType: new FormControl('virtual'),
           getterAttributes: new FormControl(''),
           setterAttributes: new FormControl(''),
@@ -122,6 +123,8 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
   // Handler for field details submission
   onAddField() {
+    let functionName = "onAddField()";
+
     // Name and DataType of a field are required
     let nameFormControl = this.formGroup.get('name');
     let dataTypeFormControl = this.formGroup.get('dataType');
@@ -146,7 +149,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       );
 
       // If the property is to be generated and the property name is given
-      if (this.showPropertyConfig == true) {
+      if (this.showPropertyConfig == true && !propertyNameFormControl?.errors) {
 
         let propertyTypeFormControl = propertyForm.get('propertyType');
 
@@ -155,32 +158,58 @@ export class CsharpFormComponent implements OnInit, FormComponent {
         let setterAttributes = propertyForm.get('setterAttributes')?.value;
         let initializerAttributes = propertyForm.get('initializerAttributes')?.value;
 
-        if (getterAttributes?.length > 0)
-          accessors.set('getter', { getterAttributes });
+        if (getterAttributes?.length > 0) {
+          let getterAttributesList = (getterAttributes as string)?.split('\n');
+          this.debug(`${this.className}::${functionName}`, getterAttributesList);
 
-        if (setterAttributes?.length > 0)
-          accessors.set('setter', { setterAttributes });
+          accessors.set('getter', { getterAttributes: getterAttributesList });
+        }
 
-        if (initializerAttributes?.length > 0)
-          accessors.set('initializer', { initializerAttributes });
+        if (setterAttributes?.length > 0) {
+          let setterAttributesList = (setterAttributes as string)?.split('\n');
+
+          this.debug(`${this.className}::${functionName}`, setterAttributesList);
+
+          accessors.set('setter', { setterAttributes: setterAttributesList });
+        }
+
+        if (initializerAttributes?.length > 0) {
+          let initializerAttributesList = (initializerAttributes as string)?.split('\n');
+          this.debug(`${this.className}::${functionName}`, initializerAttributesList);
+
+          accessors.set('initializer', { initializerAttributes: initializerAttributesList });
+        }
 
         // Set the corresponding properties in the Csharp field object
         csharpField.propertyName = propertyNameFormControl?.value;
         csharpField.propertyType = propertyTypeFormControl?.value;
+
+        // Add the field to the list
+        this.csharpService.addField(csharpField);
+
+        // Reset the form
+        this.resetForm();
       }
 
-      // Add the new field to the list
-      this.csharpService.addField(csharpField);
+      // If the property is not to be generated
+      if (this.showPropertyConfig == false) {
+        // Add the new field to the list
+        this.csharpService.addField(csharpField);
 
-      // Reset the form
-      this.resetForm();
+        // Reset the form
+        this.resetForm();
+      }
     }
   }
 
+
   // Resets the form to the original state
   resetForm() {
-    // By default, the accessModifier and propertyType of a field will be virtual
-    this.formGroup.reset({ accessModifier: 'public', propertyType: 'virtual' });
+    // Reset the propertyForm
+    this.resetPropertyForm();
+
+    // By default, the accessModifier will be public
+    this.formGroup.reset({ accessModifier: 'public' });
 
     // The toggler for 'public' accessModifier will take care of UI related
     // changes
@@ -242,11 +271,12 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
   }
 
-  //! TODO : If setter is clicked, it should wipe out initializer attributes
-  //!        vice versa
   // Toggles whether setter form is to be
   // displayed or not
   toggleSetter() {
+    // Clear the intializer accessor attributes
+    (this.formGroup.get('propertyForm') as FormGroup).patchValue({ initializerAttributes: "" });
+
     this.isSetterEnabled = !this.isSetterEnabled;
     this.isInitEnabled = false;
   }
@@ -254,6 +284,9 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   // Toggles whether initializer form is to be
   // displayed or not
   toggleInitializer() {
+    // Clear the setter accessor attributes
+    (this.formGroup.get('propertyForm') as FormGroup).patchValue({ setterAttributes: "" });
+
     this.isInitEnabled = !this.isInitEnabled;
     this.isSetterEnabled = false;
   }
