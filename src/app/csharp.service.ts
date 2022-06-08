@@ -20,6 +20,7 @@ export class CsharpService implements IFieldDetailsService {
       "public",
       "",
       "virtual",
+      "public",
       new Map<string, any>()
     ),
     new CsharpField(
@@ -30,6 +31,7 @@ export class CsharpService implements IFieldDetailsService {
       "private",
       "PhoneNumber",
       "virtual",
+      "private",
       new Map<string, any>(
         [
           ["setter", { setterAttributes: "[Required]" }],
@@ -44,6 +46,7 @@ export class CsharpService implements IFieldDetailsService {
       "protected",
       "Address",
       "abstract",
+      "protected",
       new Map<string, any>(
         [
           ["getter", "[Required]"]

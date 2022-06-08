@@ -29,6 +29,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       propertyForm: new FormGroup(
         {
           propertyName: new FormControl('', Validators.required),
+          propertyAccessModifier: new FormControl('public'),
           propertyType: new FormControl('virtual'),
           getterAttributes: new FormControl(''),
           setterAttributes: new FormControl(''),
@@ -58,10 +59,17 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   privateButtonChecked = false;
   protectedButtonChecked = false;
 
+  // Button active status for property access modifier
+  propertyAccessModifierButtons = {
+    publicProperty: true,
+    privateProperty: false,
+    protectedProperty: false
+  }
+
   // Maps accessModifier to a function that takes care
   // of setting state related to propertyConfig that the particular
   // accessModifier allows
-  accessModifierButtonTogglerMap = new Map<string, Function>(
+  fieldAccessModifierButtonTogglerMap = new Map<string, Function>(
     [
       [
         'public', () => {
@@ -96,6 +104,28 @@ export class CsharpFormComponent implements OnInit, FormComponent {
           this.publicButtonChecked = this.privateButtonChecked = false;
         }
       ]
+    ]
+  );
+
+  propertyAccessModifierButtonTogglerMap = new Map<string, Function>(
+    [
+      ['public', () => {
+        this.propertyAccessModifierButtons.publicProperty = true;
+        this.propertyAccessModifierButtons.privateProperty = this.propertyAccessModifierButtons.protectedProperty = false;
+
+      }],
+
+      ['protected', () => {
+        this.propertyAccessModifierButtons.protectedProperty = true;
+
+        this.propertyAccessModifierButtons.privateProperty = this.propertyAccessModifierButtons.publicProperty = false;
+      }],
+
+      ['private', () => {
+        this.propertyAccessModifierButtons.privateProperty = true;
+
+        this.propertyAccessModifierButtons.protectedProperty = this.propertyAccessModifierButtons.publicProperty = false;
+      }]
     ]
   );
 
@@ -136,6 +166,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
         this.formGroup.get("accessModifier")?.value,
         "",
         "",
+        this.formGroup.get("propertyForm.propertyAccessModifier")?.value ?? "public",
         accessors
       );
 
@@ -215,6 +246,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       {
         propertyName: '',
         propertyType: 'virtual',
+        propertyAccessModifer: 'public',
         getterAttributes: '',
         setterAttributes: '',
         initializerAttributes: ''
@@ -225,8 +257,8 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     this.virtualButtonChecked = true;
     this.abstractButtonChecked = false;
     this.isGetterEnabled = this.isSetterEnabled = this.isInitEnabled = false;
-
     this.togglePropertyType('virtual');
+    this.togglePropertyAccessModifier('public');
   }
 
   // Patches the form with the field details recieved from the
@@ -247,6 +279,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
         {
           propertyName: field?.propertyName ?? "",
           propertyType: field?.propertyType ?? "",
+          propertyAccessModifier: field?.propertyAccessModifier ?? "public",
           getterAttributes: field?.accessors.get('getter')?.getterAttributes ?? "",
           setterAttributes: field?.accessors.get('setter')?.setterAttributes ?? "",
           initializerAttributes: field?.accessors.get('initializer')?.initializerAttributes ?? ""
@@ -256,6 +289,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
     // Update the UI based on the field
     this.toggleAccessModifier(field?.accessModifier);
+    this.togglePropertyAccessModifier(field?.propertyAccessModifier);
     this.virtualButtonChecked = field?.propertyType == 'virtual' ? true : false;
     this.abstractButtonChecked = field?.propertyType == 'abstract' ? true : false;
 
@@ -300,7 +334,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
     if (accessModifierFormControl) {
       // Get the toggler function for the given accessModiier
-      let toggler = this.accessModifierButtonTogglerMap.get(accessModifier);
+      let toggler = this.fieldAccessModifierButtonTogglerMap.get(accessModifier);
 
       toggler?.call(this);
 
@@ -330,5 +364,12 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
       this.togglePropertyType('virtual');
     }
+  }
+
+  // Toggles access modifier for property
+  togglePropertyAccessModifier(accessModifier: string) {
+    this.debug("propertyAccess Modifier", this.formGroup.get('propertyForm.propertyAccessModifier')?.value);
+
+    this.propertyAccessModifierButtonTogglerMap.get(accessModifier)?.call(this);
   }
 }

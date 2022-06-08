@@ -62,6 +62,24 @@
       </mat-button-toggle-group>
     </div>
 
+    <!-- Property Access Modifier Button Group -->
+    <mat-card>
+      <mat-card-subtitle>Property Access Modifier</mat-card-subtitle>
+      <mat-card-content>
+        <mat-button-toggle-group formControlName="propertyAccessModifier">
+          <mat-button-toggle value="public" (click)="this.togglePropertyAccessModifier('public')"
+            [checked]="this.propertyAccessModifierButtons.publicProperty">public
+          </mat-button-toggle>
+          <mat-button-toggle value="private" (click)="this.togglePropertyAccessModifier('private')"
+            [checked]="this.propertyAccessModifierButtons.privateProperty">private
+          </mat-button-toggle>
+          <mat-button-toggle value="protected" (click)="this.togglePropertyAccessModifier('protected')"
+            [checked]="this.propertyAccessModifierButtons.protectedProperty">protected
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </mat-card-content>
+    </mat-card>
+
     <!-- Property Accessors -->
     <div id="getter-setter-init-button-group-div">
       <!-- Buttons for selecting the getter, setter and init -->

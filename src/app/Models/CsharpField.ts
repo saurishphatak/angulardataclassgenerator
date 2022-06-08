@@ -11,6 +11,7 @@ export class CsharpField {
     public accessModifier: string,
     public propertyName: string,
     public propertyType: string,
+    public propertyAccessModifier: string,
     public accessors: Map<string, any>
   ) {
   }
