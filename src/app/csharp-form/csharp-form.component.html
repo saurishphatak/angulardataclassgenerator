@@ -54,10 +54,12 @@
 
     <!-- Property Type (virtual / abstract) -->
     <div>
-      <mat-button-toggle-group>
-        <mat-button-toggle [checked]="this.virtualButtonChecked" (click)="this.togglePropertyType('virtual')">virtual
+      <mat-button-toggle-group formControlName="propertyType">
+        <mat-button-toggle [checked]="this.propertyTypeButtons.virtualButton" value="virtual"
+          (click)="this.togglePropertyType('virtual')">virtual
         </mat-button-toggle>
-        <mat-button-toggle [checked]="this.abstractButtonChecked" (click)="this.togglePropertyType('abstract')">abstract
+        <mat-button-toggle [checked]="this.propertyTypeButtons.abstractButton" value="abstract"
+          (click)="this.togglePropertyType('abstract')">abstract
         </mat-button-toggle>
       </mat-button-toggle-group>
     </div>

@@ -51,8 +51,10 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   propertyConfigButtonColor = "primary";
 
   // Button active status for property type
-  virtualButtonChecked = true;
-  abstractButtonChecked = false;
+  propertyTypeButtons = {
+    virtualButton: true,
+    abstractButton: false
+  }
 
   // Button active status for field access modifier
   publicButtonChecked = true;
@@ -125,6 +127,20 @@ export class CsharpFormComponent implements OnInit, FormComponent {
         this.propertyAccessModifierButtons.privateProperty = true;
 
         this.propertyAccessModifierButtons.protectedProperty = this.propertyAccessModifierButtons.publicProperty = false;
+      }]
+    ]
+  );
+
+  propertyTypeButtonTogglerMap = new Map<string, Function>(
+    [
+      ['virtual', () => {
+        this.propertyTypeButtons.virtualButton = true;
+        this.propertyTypeButtons.abstractButton = false;
+      }],
+
+      ['abstract', () => {
+        this.propertyTypeButtons.abstractButton = true;
+        this.propertyTypeButtons.virtualButton = false;
       }]
     ]
   );
@@ -224,14 +240,17 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     }
   }
 
-
   // Resets the form to the original state
   resetForm() {
-    // Reset the propertyForm
-    this.resetPropertyForm();
+    let functionName = "resetForm()";
+
+    this.debug(`${this.className}::${functionName}`);
 
     // By default, the accessModifier will be public
     this.formGroup.reset({ accessModifier: 'public' });
+
+    // Reset the propertyForm
+    this.resetPropertyForm();
 
     // The toggler for 'public' accessModifier will take care of UI related
     // changes
@@ -240,6 +259,10 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
   // Resets the property form to the original state
   resetPropertyForm() {
+    let functionName = "resetPropertyForm()";
+
+    this.debug(`${this.className}::${functionName}`);
+
     let propertyForm = this.formGroup.get('propertyForm') as FormGroup;
 
     propertyForm.reset(
@@ -254,8 +277,6 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     );
 
     // Update the UI
-    this.virtualButtonChecked = true;
-    this.abstractButtonChecked = false;
     this.isGetterEnabled = this.isSetterEnabled = this.isInitEnabled = false;
     this.togglePropertyType('virtual');
     this.togglePropertyAccessModifier('public');
@@ -278,7 +299,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
         propertyForm:
         {
           propertyName: field?.propertyName ?? "",
-          propertyType: field?.propertyType ?? "",
+          propertyType: field?.propertyType ?? "virtual",
           propertyAccessModifier: field?.propertyAccessModifier ?? "public",
           getterAttributes: field?.accessors.get('getter')?.getterAttributes ?? "",
           setterAttributes: field?.accessors.get('setter')?.setterAttributes ?? "",
@@ -290,8 +311,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     // Update the UI based on the field
     this.toggleAccessModifier(field?.accessModifier);
     this.togglePropertyAccessModifier(field?.propertyAccessModifier);
-    this.virtualButtonChecked = field?.propertyType == 'virtual' ? true : false;
-    this.abstractButtonChecked = field?.propertyType == 'abstract' ? true : false;
+    this.togglePropertyType(field?.propertyType);
 
     if (field?.propertyName?.length > 0) {
       this.showPropertyConfig = true;
@@ -344,11 +364,10 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
   // Toggles the property type (virtual/abstract)
   togglePropertyType(propertyType: string) {
-    let propertyTypeFormControl = this.formGroup.get("propertyForm.propertyType");
+    let functionName = "togglePropertyType()";
 
-    if (propertyTypeFormControl) {
-      propertyTypeFormControl.setValue(propertyType);
-    }
+    this.debug(`${this.className}::${functionName}`, propertyType);
+    this.propertyTypeButtonTogglerMap.get(propertyType)?.call(this);
   }
 
   // Toggles whether to show the property config UI
@@ -368,7 +387,9 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
   // Toggles access modifier for property
   togglePropertyAccessModifier(accessModifier: string) {
-    this.debug("propertyAccess Modifier", this.formGroup.get('propertyForm.propertyAccessModifier')?.value);
+    let functionName = "togglePropertyAccessModifier()";
+
+    this.debug(`${this.className}::${functionName}`, accessModifier);
 
     this.propertyAccessModifierButtonTogglerMap.get(accessModifier)?.call(this);
   }
