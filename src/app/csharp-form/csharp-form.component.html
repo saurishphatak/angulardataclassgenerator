@@ -136,7 +136,7 @@
     (click)="this.toggleExtraConfig()">Extra</button>
   <mat-card *ngIf="this.showExtraConfig">
 
-    <div id="extra-config-div">
+    <div id="extra-config-div" formGroupName="extraDetailsForm">
       <!-- Default Value -->
       <mat-form-field>
         <mat-label>Default Value</mat-label>

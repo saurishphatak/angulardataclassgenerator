@@ -22,10 +22,15 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     {
       name: new FormControl('', Validators.required),
       dataType: new FormControl('', Validators.required),
-      defaultValue: new FormControl(''),
-      comment: new FormControl(''),
-      fieldAttributes: new FormControl(''),
       accessModifier: new FormControl('public'),
+
+      extraDetailsForm: new FormGroup(
+        {
+          defaultValue: new FormControl(''),
+          comment: new FormControl(''),
+          fieldAttributes: new FormControl('')
+        }
+      ),
 
       propertyForm: new FormGroup(
         {
@@ -176,9 +181,9 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       let csharpField = new CsharpField(
         nameFormControl?.value,
         dataTypeFormControl?.value,
-        this.formGroup.get("defaultValue")?.value,
-        this.formGroup.get("comment")?.value,
-        this.formGroup.get("fieldAttributes")?.value,
+        this.formGroup.get("extraDetailsForm.defaultValue")?.value,
+        this.formGroup.get("extraDetailsForm.comment")?.value,
+        this.formGroup.get("extraDetailsForm.fieldAttributes")?.value,
         this.formGroup.get("accessModifier")?.value,
         "",
         "virtual",
@@ -252,7 +257,10 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     // The toggler for 'public' accessModifier will take care of UI related
     // changes
     this.toggleFieldAccessModifier('public');
+
+
     this.resetPropertyForm();
+    this.resetExtraDetailsForm();
   }
 
   // Resets the property form to the original state
@@ -282,6 +290,24 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     this.togglePropertyAccessModifier('public');
   }
 
+  // Resets the extra details form
+  resetExtraDetailsForm() {
+    let functionName = "resetExtraDetailsForm";
+    this.debug(`${this.className}::${functionName}`);
+
+    this.formGroup.get("extraDetailsForm")?.reset(
+      {
+        defaultValue: "",
+        comment: "",
+        fieldAttributes: ""
+      }
+    );
+
+    // Update the UI
+    this.showExtraConfig = false;
+    this.extraConfigButtonColor = "primary";
+  }
+
   // Patches the form with the field details recieved from the
   // service
   patchForm(field: CsharpField) {
@@ -292,10 +318,13 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       {
         name: field?.name,
         dataType: field?.dataType,
-        defaultValue: field?.defaultValue,
-        comment: field?.comment,
-        fieldAttributes: field?.fieldAttributes,
         accessModifier: field?.accessModifier,
+
+        extraDetailsForm: {
+          defaultValue: field?.defaultValue,
+          comment: field?.comment,
+          fieldAttributes: field?.fieldAttributes,
+        },
 
         propertyForm:
         {
@@ -319,6 +348,10 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       this.propertyConfigButtonColor = "warn";
     }
 
+    if (field?.defaultValue?.length > 0 || field?.comment?.length > 0 || field?.fieldAttributes?.length > 0) {
+      this.showExtraConfig = true;
+      this.extraConfigButtonColor = "warn";
+    }
   }
 
   // Toggles whether setter form is to be
@@ -387,16 +420,18 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     this.propertyAccessModifierButtonTogglerMap.get(accessModifier)?.call(this);
   }
 
+  // Toggles whether to show extra config UI
   toggleExtraConfig() {
+    let functionName = "toggleExtraConfig()";
+
+    this.debug(`${this.className}::${functionName}`);
+
     this.showExtraConfig = !this.showExtraConfig;
 
     if (!this.showExtraConfig) {
-      this.formGroup.setValue({
-        fieldAttributes: '',
-        defaultValue: '',
-        comment: ''
-      }
-      );
+      this.resetExtraDetailsForm();
     }
+    else
+      this.extraConfigButtonColor = "warn";
   }
 }

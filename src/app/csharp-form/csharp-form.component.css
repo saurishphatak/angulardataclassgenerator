@@ -21,7 +21,7 @@
   align-items: center;
   margin: 10px;
 
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 #extra-config-div {
@@ -30,5 +30,5 @@
   align-items: center;
 
   margin: 10px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
