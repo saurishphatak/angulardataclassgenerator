@@ -6,12 +6,13 @@ export class CsharpField {
   public constructor(
     public name: string,
     public dataType: string,
-    public defaultValue: string,
+    public defaultValue: string = '',
     public comment: string = '',
-    public accessModifier: string,
+    public fieldAttributes: string = '',
+    public accessModifier: string = 'public',
     public propertyName: string,
-    public propertyType: string,
-    public propertyAccessModifier: string,
+    public propertyType: string = 'virtual',
+    public propertyAccessModifier: string = 'public',
     public accessors: Map<string, any>
   ) {
   }

@@ -17,6 +17,7 @@ export class CsharpService implements IFieldDetailsService {
       "string",
       "",
       "",
+      "",
       "public",
       "",
       "virtual",
@@ -28,6 +29,7 @@ export class CsharpService implements IFieldDetailsService {
       "string",
       "",
       "Customer phone number",
+      "",
       "private",
       "PhoneNumber",
       "virtual",
@@ -41,6 +43,7 @@ export class CsharpService implements IFieldDetailsService {
     new CsharpField(
       "addres",
       "string",
+      "",
       "",
       "",
       "protected",

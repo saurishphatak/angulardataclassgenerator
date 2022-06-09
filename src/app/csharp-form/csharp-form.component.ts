@@ -24,6 +24,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       dataType: new FormControl('', Validators.required),
       defaultValue: new FormControl(''),
       comment: new FormControl(''),
+      fieldAttributes: new FormControl(''),
       accessModifier: new FormControl('public'),
 
       propertyForm: new FormGroup(
@@ -45,9 +46,13 @@ export class CsharpFormComponent implements OnInit, FormComponent {
   isSetterEnabled = false;
   isInitEnabled = false;
 
-  // Whether to properties configuration controls
+  // Property configuration controls
   showPropertyConfig = false;
   propertyConfigButtonColor = "primary";
+
+  // Default value, comment, field attributes configuration controls
+  showExtraConfig = false;
+  extraConfigButtonColor = "primary";
 
   // Button active status for property type
   propertyTypeButtons = {
@@ -171,12 +176,13 @@ export class CsharpFormComponent implements OnInit, FormComponent {
       let csharpField = new CsharpField(
         nameFormControl?.value,
         dataTypeFormControl?.value,
-        this.formGroup.get("defaultValue")?.value ?? '',
-        this.formGroup.get("comment")?.value ?? '',
+        this.formGroup.get("defaultValue")?.value,
+        this.formGroup.get("comment")?.value,
+        this.formGroup.get("fieldAttributes")?.value,
         this.formGroup.get("accessModifier")?.value,
         "",
         "virtual",
-        this.formGroup.get("propertyForm.propertyAccessModifier")?.value ?? "public",
+        this.formGroup.get("propertyForm.propertyAccessModifier")?.value,
         accessors
       );
 
@@ -236,7 +242,10 @@ export class CsharpFormComponent implements OnInit, FormComponent {
 
     // By default, the accessModifier will be public
     this.formGroup.reset({
-      accessModifier: 'public'
+      accessModifier: 'public',
+      defaultValue: '',
+      comment: '',
+      fieldAttributes: ''
     });
 
 
@@ -285,6 +294,7 @@ export class CsharpFormComponent implements OnInit, FormComponent {
         dataType: field?.dataType,
         defaultValue: field?.defaultValue,
         comment: field?.comment,
+        fieldAttributes: field?.fieldAttributes,
         accessModifier: field?.accessModifier,
 
         propertyForm:
@@ -375,5 +385,18 @@ export class CsharpFormComponent implements OnInit, FormComponent {
     this.debug(`${this.className}::${functionName}`, accessModifier);
 
     this.propertyAccessModifierButtonTogglerMap.get(accessModifier)?.call(this);
+  }
+
+  toggleExtraConfig() {
+    this.showExtraConfig = !this.showExtraConfig;
+
+    if (!this.showExtraConfig) {
+      this.formGroup.setValue({
+        fieldAttributes: '',
+        defaultValue: '',
+        comment: ''
+      }
+      );
+    }
   }
 }

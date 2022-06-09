@@ -76,9 +76,12 @@
       <!-- Property Accessors -->
       <div id="getter-setter-init-button-group-div">
         <!-- Buttons for selecting the getter, setter and init -->
-        <mat-button-toggle [checked]="this.isGetterEnabled" (click)="this.toggleGetter()">Getter</mat-button-toggle>
-        <mat-button-toggle [checked]="this.isSetterEnabled" (click)="this.toggleSetter()">Setter</mat-button-toggle>
-        <mat-button-toggle [checked]="this.isInitEnabled" (click)="this.toggleInitializer()">Init</mat-button-toggle>
+        <mat-button-toggle [checked]="this.isGetterEnabled" (click)="this.toggleGetter()">Getter
+        </mat-button-toggle>
+        <mat-button-toggle [checked]="this.isSetterEnabled" (click)="this.toggleSetter()">Setter
+        </mat-button-toggle>
+        <mat-button-toggle [checked]="this.isInitEnabled" (click)="this.toggleInitializer()">Init
+        </mat-button-toggle>
       </div>
 
       <mat-accordion multi="true">
@@ -129,18 +132,30 @@
   </mat-card>
 
   <!-- Extra Details Configurator -->
-  <mat-card>
-    <!-- Default Value -->
-    <mat-form-field>
-      <mat-label>Default Value</mat-label>
-      <input type="text" matInput formControlName="defaultValue">
-    </mat-form-field>
+  <button type="button" mat-raised-button [color]="this.extraConfigButtonColor"
+    (click)="this.toggleExtraConfig()">Extra</button>
+  <mat-card *ngIf="this.showExtraConfig">
 
-    <!-- Field Comment -->
-    <mat-form-field>
-      <mat-label>Comment</mat-label>
-      <input matInput type="text" formControlName="comment">
-    </mat-form-field>
+    <div id="extra-config-div">
+      <!-- Default Value -->
+      <mat-form-field>
+        <mat-label>Default Value</mat-label>
+        <input type="text" matInput formControlName="defaultValue">
+      </mat-form-field>
+
+      <!-- Field Comment -->
+      <mat-form-field>
+        <mat-label>Comment</mat-label>
+        <input matInput type="text" formControlName="comment">
+      </mat-form-field>
+
+      <!-- Field Attributes -->
+      <mat-form-field>
+        <mat-label>Field Attributes</mat-label>
+        <textarea matInput formControlName="fieldAttributes"></textarea>
+      </mat-form-field>
+    </div>
   </mat-card>
+
   <button id="add-field-button" (click)="onAddField()" type="button" mat-raised-button color="primary">Add</button>
 </form>
