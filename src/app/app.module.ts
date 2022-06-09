@@ -14,6 +14,8 @@ import { FieldDetailsFormHostDirective } from './field-details-form-host.directi
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FieldDetailsListHostDirective } from './field-details-list-host.directive';
 import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csharp-field-details-list.component';
+import { ClassDetailsFormHostDirective } from './class-details-form-host.directive';
+import { CsharpClassDetailsFormComponent } from './csharp-class-details-form/csharp-class-details-form.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csh
     CsharpFormComponent,
     FieldDetailsFormHostDirective,
     FieldDetailsListHostDirective,
-    CsharpFieldDetailsListComponent
+    CsharpFieldDetailsListComponent,
+    ClassDetailsFormHostDirective,
+    CsharpClassDetailsFormComponent,
   ],
   imports: [
     BrowserModule,

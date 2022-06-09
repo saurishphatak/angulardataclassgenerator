@@ -17,4 +17,7 @@ export interface IFieldDetailsService {
 
   // Returns all the fields
   get fields(): any[];
+
+  // Submits the form for the data class details
+  submitClassDescription(): any;
 }

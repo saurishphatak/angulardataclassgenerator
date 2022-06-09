@@ -1,4 +1,6 @@
 import { Component, Type, ViewChild } from '@angular/core';
+import { ClassDetailsFormHostDirective } from './class-details-form-host.directive';
+import { CsharpClassDetailsFormComponent } from './csharp-class-details-form/csharp-class-details-form.component';
 import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csharp-field-details-list.component';
 import { CsharpFormComponent } from './csharp-form/csharp-form.component';
 import { FieldDetailsFormHostDirective } from './field-details-form-host.directive';
@@ -29,13 +31,25 @@ export class AppComponent {
     ]
   );
 
-  // Reference to the host directive that will host
+  // Map that holds a key-value pair of
+  // langauge to its language details form component
+  languageDetailsFormComponentMap = new Map<string, Type<Object>>(
+    [
+      ["csharp", CsharpClassDetailsFormComponent]
+    ]
+  );
+
+  // Reference to the directive that will host
   // the form details field
   @ViewChild(FieldDetailsFormHostDirective) fieldDetailsFormHostDirective!: FieldDetailsFormHostDirective;
 
-  // Reference to the host directive that will host
+  // Reference to the directive that will host
   // the field details list
   @ViewChild(FieldDetailsListHostDirective) fieldDetailsListHostDirective!: FieldDetailsListHostDirective;
+
+  // Reference to the directive that will host
+  // the class details form
+  @ViewChild(ClassDetailsFormHostDirective) languageDetailsFormHostDirective!: ClassDetailsFormHostDirective;
 
   // Will create a new component containing the form
   // for field details of the given language
@@ -64,6 +78,18 @@ export class AppComponent {
 
       // Create a new list component
       let listComponentRef = this.fieldDetailsListHostDirective.viewContainerRef.createComponent(listComponent!);
+    }
+
+    // Create the language details list component
+    if (this.languageDetailsFormComponentMap.has(language)) {
+      // Get the language details form component
+      let classDetailsFormComponent = this.languageDetailsFormComponentMap.get(language);
+
+      // Clear the host
+      this.languageDetailsFormHostDirective.viewContainerRef.clear();
+
+      // Create the new component
+      let languageDetailsFormComponentRef = this.languageDetailsFormHostDirective.viewContainerRef.createComponent(classDetailsFormComponent!);
     }
   }
 }
