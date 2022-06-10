@@ -10,12 +10,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CsharpFormComponent } from './csharp-form/csharp-form.component';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FieldDetailsFormHostDirective } from './field-details-form-host.directive';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { FieldDetailsListHostDirective } from './field-details-list-host.directive';
 import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csharp-field-details-list.component';
-import { ClassDetailsFormHostDirective } from './class-details-form-host.directive';
+import { ClassDetailsFormHostDirective } from './Directives/class-details-form-host.directive';
 import { CsharpClassDetailsFormComponent } from './csharp-class-details-form/csharp-class-details-form.component';
+import { FieldDetailsFormHostDirective } from './Directives/field-details-form-host.directive';
+import { FieldDetailsListHostDirective } from './Directives/field-details-list-host.directive';
 
 @NgModule({
   declarations: [

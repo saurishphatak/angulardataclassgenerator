@@ -1,11 +1,11 @@
 import { Component, Type, ViewChild } from '@angular/core';
-import { ClassDetailsFormHostDirective } from './class-details-form-host.directive';
+import { ClassDetailsFormHostDirective } from './Directives/class-details-form-host.directive';
 import { CsharpClassDetailsFormComponent } from './csharp-class-details-form/csharp-class-details-form.component';
 import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csharp-field-details-list.component';
 import { CsharpFormComponent } from './csharp-form/csharp-form.component';
-import { FieldDetailsFormHostDirective } from './field-details-form-host.directive';
-import { FieldDetailsListHostDirective } from './field-details-list-host.directive';
 import { FormComponent } from './Interfaces/FormComponent';
+import { FieldDetailsFormHostDirective } from './Directives/field-details-form-host.directive';
+import { FieldDetailsListHostDirective } from './Directives/field-details-list-host.directive';
 
 @Component({
   selector: 'app-root',

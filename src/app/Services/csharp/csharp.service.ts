@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IFieldDetailsService } from './Interfaces/IFieldDetailsService'
-import { CsharpField } from './Models/CsharpField';
+import { IFieldDetailsService } from '../../Interfaces/IFieldDetailsService'
+import { CsharpField } from '../../Models/CsharpField';
 
 @Injectable({
   providedIn: 'root'
