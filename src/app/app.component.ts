@@ -6,6 +6,7 @@ import { CsharpFormComponent } from './csharp-form/csharp-form.component';
 import { FormComponent } from './Interfaces/FormComponent';
 import { FieldDetailsFormHostDirective } from './Directives/field-details-form-host.directive';
 import { FieldDetailsListHostDirective } from './Directives/field-details-list-host.directive';
+import { IDataClassLanguageComponent } from './Interfaces/IDataClassLanguageComponent';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ export class AppComponent {
 
   // Map that holds a key-value pair of
   // language to its field details form component
-  languageFieldDetailsFormComponentMap = new Map<string, Type<FormComponent>>(
+  languageFieldDetailsFormComponentMap = new Map<string, Type<IDataClassLanguageComponent>>(
     [
       ["csharp", CsharpFormComponent]
     ]
@@ -28,7 +29,7 @@ export class AppComponent {
 
   // Map that holds a key-value pair of
   // language to its field details list component
-  languageFieldDetailsListComponent = new Map<string, Type<Object>>(
+  languageFieldDetailsListComponent = new Map<string, Type<IDataClassLanguageComponent>>(
     [
       ["csharp", CsharpFieldDetailsListComponent]
     ]
@@ -36,7 +37,7 @@ export class AppComponent {
 
   // Map that holds a key-value pair of
   // langauge to its language details form component
-  languageDetailsFormComponentMap = new Map<string, Type<Object>>(
+  languageDetailsFormComponentMap = new Map<string, Type<IDataClassLanguageComponent>>(
     [
       ["csharp", CsharpClassDetailsFormComponent]
     ]
@@ -93,6 +94,9 @@ export class AppComponent {
 
       // Create the new component
       let languageDetailsFormComponentRef = this.languageDetailsFormHostDirective.viewContainerRef.createComponent(classDetailsFormComponent!);
+
+      // Subscribe to its service
+      languageDetailsFormComponentRef.instance.languageService.dataClassResultReceivedSubject.subscribe(this.toggleSpinner.bind(this));
     }
   }
 

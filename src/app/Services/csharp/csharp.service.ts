@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IFieldDetailsService } from '../../Interfaces/IFieldDetailsService'
+import { IDataClassService } from '../../Interfaces/IFieldDetailsService'
 import { CsharpField } from '../../Models/CsharpField';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CsharpService implements IFieldDetailsService {
+export class CsharpService implements IDataClassService {
 
   constructor() { }
+
+  dataClassResultReceivedSubject: Subject<any> = new Subject<boolean>();
+
 
   // Holds all the fields
   protected _fields: CsharpField[] = [
@@ -102,7 +105,6 @@ export class CsharpService implements IFieldDetailsService {
   get fields(): CsharpField[] {
     return this._fields;
   }
-
 
   generateClass() {
     return new Promise<string>((resolve, reject) => {

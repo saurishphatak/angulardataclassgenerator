@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CsharpService } from '../Services/csharp/csharp.service';
 import { CsharpField } from '../Models/CsharpField';
+import { IDataClassLanguageComponent } from '../Interfaces/IDataClassLanguageComponent';
 
 @Component({
   selector: 'app-csharp-field-details-list',
   templateUrl: './csharp-field-details-list.component.html',
   styleUrls: ['./csharp-field-details-list.component.css']
 })
-export class CsharpFieldDetailsListComponent implements OnInit {
+export class CsharpFieldDetailsListComponent implements OnInit, IDataClassLanguageComponent {
 
   constructor(
-    public csharpService: CsharpService
+    public languageService: CsharpService
   ) { }
 
   private className = "CsharpFieldDetailsListComponent";
@@ -26,7 +27,7 @@ export class CsharpFieldDetailsListComponent implements OnInit {
 
     // Emit the id to the csharp service to get the
     // field updated
-    this.csharpService.updateField(id);
+    this.languageService.updateField(id);
 
     // Stop the event from propogating further and expanding
     // the expansion panel
@@ -36,7 +37,7 @@ export class CsharpFieldDetailsListComponent implements OnInit {
   removeField(event: any, id: number) {
     this.debug(this.className + "::removeField()", { id });
 
-    let removedField = this.csharpService.removeField(id);
+    let removedField = this.languageService.removeField(id);
 
     this.debug(this.className + "::removeField()", { removedField });
 

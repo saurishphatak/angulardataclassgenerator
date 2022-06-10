@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { IDataClassLanguageComponent } from '../Interfaces/IDataClassLanguageComponent';
 import { CsharpService } from '../Services/csharp/csharp.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { CsharpService } from '../Services/csharp/csharp.service';
   templateUrl: './csharp-class-details-form.component.html',
   styleUrls: ['./csharp-class-details-form.component.css']
 })
-export class CsharpClassDetailsFormComponent implements OnInit {
+export class CsharpClassDetailsFormComponent implements OnInit, IDataClassLanguageComponent {
 
   // Emits event to the parent componenent letting it
   // know that the result has been received
@@ -19,7 +20,7 @@ export class CsharpClassDetailsFormComponent implements OnInit {
 
   constructor(
     protected formBuilder: FormBuilder,
-    protected csharpService: CsharpService
+    public languageService: CsharpService
   ) {
     this.formGroup = formBuilder.group({
       name: new FormControl('', Validators.required),
@@ -34,17 +35,15 @@ export class CsharpClassDetailsFormComponent implements OnInit {
   gennerateClass() {
     console.log("CsharpClassDetailsFormComponent::generateClass()");
 
-    this.resultNotReceieved.emit(true);
+    this.languageService.dataClassResultReceivedSubject.next(true);
 
-    this.csharpService.generateClass().then(result => {
+    this.languageService.generateClass().then(result => {
       console.log(result, "Emitting false now");
 
-      this.doEmit(false);
+      this.languageService.dataClassResultReceivedSubject.next(false);
     });
   }
 
-  doEmit(value: boolean) {
-    this.resultNotReceieved.emit(false);
-  }
+
 
 }
