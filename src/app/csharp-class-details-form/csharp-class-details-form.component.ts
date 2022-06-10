@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-csharp-class-details-form',
@@ -7,7 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CsharpClassDetailsFormComponent implements OnInit {
 
-  constructor() { }
+  className = "CsharpClassDetailsFormComponent";
+
+  formGroup: FormGroup;
+
+  constructor(
+    protected formBuilder: FormBuilder
+  ) {
+    this.formGroup = formBuilder.group({
+      name: new FormControl('', Validators.required),
+      namespace: new FormControl(''),
+      classAttributes: new FormControl('')
+    });
+  }
 
   ngOnInit(): void {
   }

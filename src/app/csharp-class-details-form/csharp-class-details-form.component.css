@@ -1,0 +1,15 @@
+#csharp-class-details-form-div {
+  /* border: 1px solid black; */
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 10px;
+}
+
+#csharp-class-details-header-div {
+  /* border: 1px solid black; */
+
+  display: flex;
+  justify-content: center;
+}
