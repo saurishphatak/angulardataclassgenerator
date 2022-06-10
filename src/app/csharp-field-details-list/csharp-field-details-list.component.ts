@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CsharpService } from '../csharp.service';
+import { CsharpService } from '../Services/csharp/csharp.service';
 import { CsharpField } from '../Models/CsharpField';
 
 @Component({

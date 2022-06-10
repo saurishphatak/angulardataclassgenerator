@@ -15,6 +15,9 @@ import { FieldDetailsListHostDirective } from './Directives/field-details-list-h
 export class AppComponent {
   title = 'common-service-demo';
 
+  // Whether to show the loader
+  showLoader = false;
+
   // Map that holds a key-value pair of
   // language to its field details form component
   languageFieldDetailsFormComponentMap = new Map<string, Type<FormComponent>>(
@@ -91,5 +94,11 @@ export class AppComponent {
       // Create the new component
       let languageDetailsFormComponentRef = this.languageDetailsFormHostDirective.viewContainerRef.createComponent(classDetailsFormComponent!);
     }
+  }
+
+  toggleSpinner(showLoader: boolean) {
+    console.log("toggleSpinner()", showLoader);
+
+    this.showLoader = showLoader;
   }
 }

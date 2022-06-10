@@ -31,4 +31,11 @@
     Field Details List
     <ng-template appFieldDetailsListHost></ng-template>
   </div>
+
+  <ng-container *ngIf="this.showLoader">
+    <div class="overlay">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+
+  </ng-container>
 </div>

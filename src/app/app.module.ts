@@ -16,6 +16,7 @@ import { ClassDetailsFormHostDirective } from './Directives/class-details-form-h
 import { CsharpClassDetailsFormComponent } from './csharp-class-details-form/csharp-class-details-form.component';
 import { FieldDetailsFormHostDirective } from './Directives/field-details-form-host.directive';
 import { FieldDetailsListHostDirective } from './Directives/field-details-list-host.directive';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { FieldDetailsListHostDirective } from './Directives/field-details-list-h
     MatExpansionModule,
     MatCardModule,
     MatButtonModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }

@@ -102,4 +102,14 @@ export class CsharpService implements IFieldDetailsService {
   get fields(): CsharpField[] {
     return this._fields;
   }
+
+
+  generateClass() {
+    return new Promise<string>((resolve, reject) => {
+      setTimeout(
+        () => { resolve("result"); },
+        5000
+      );
+    });
+  }
 }
