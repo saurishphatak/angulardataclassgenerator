@@ -1,41 +1,45 @@
-<div id="parent">
-  <div id="class-details-div">
-    Class Details
+<mat-toolbar>
+  <button (click)="this.toggleDrawer()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Select Language</span>
+</mat-toolbar>
 
-    <!--
-      Buttons that let you select the programming
-      language
-     -->
+<mat-drawer-container>
+  <mat-drawer mode="over" #drawer>
     <div id="language-selection-buttons-div">
-      <button type="button" mat-raised-button color="primary"
-        (click)="this.createFieldDetailsFormComponent('csharp')">Csharp</button>
+      <button type="button" class="language-button" *ngFor="let language of this.languageList"
+        (click)="this.createLanguageComponents(language)" mat-flat-button color="primary">
+        {{ language }}
+      </button>
+    </div>
+  </mat-drawer>
 
-      <button type="button" mat-raised-button color="primary"
-        (click)="this.createFieldDetailsFormComponent('typescript')">TypeScript</button>
+  <div id="parent">
+    <div id="class-details-div">
+      <ng-template appClassDetailsFormHost></ng-template>
     </div>
 
-    <ng-template appClassDetailsFormHost></ng-template>
-  </div>
-
-  <div id="field-details-form-div">
-    <div id="scroll-container">
-      <!--
+    <div id="field-details-form-div">
+      <div id="scroll-container">
+        <!--
         Container for field details form component
         rendered dynamically
       -->
-      <ng-template appFieldDetailsFormHost></ng-template>
-    </div>
-  </div>
-
-  <div id="field-details-list-div">
-    Field Details List
-    <ng-template appFieldDetailsListHost></ng-template>
-  </div>
-
-  <ng-container *ngIf="this.showLoader">
-    <div class="overlay">
-      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        <ng-template appFieldDetailsFormHost></ng-template>
+      </div>
     </div>
 
-  </ng-container>
-</div>
+    <div id="field-details-list-div">
+      <ng-template appFieldDetailsListHost></ng-template>
+    </div>
+
+    <ng-container *ngIf="this.showLoader">
+      <div class="overlay">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+
+    </ng-container>
+  </div>
+
+</mat-drawer-container>

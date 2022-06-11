@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 
-  height: 100vh;
+  height: calc(100vh - 8vh);
   overflow-y: scroll;
 }
 
@@ -10,15 +10,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 1px red;
+  /* border: solid 1px red; */
 }
 
 #scroll-container {
   margin: auto;
-  max-height: 100vh;
+  max-height: calc(100vh - 8vh);
   overflow: auto;
 
-  border: 1px solid black;
+  /* border: 1px solid black; */
 
   /*
         Makes the scroll container
@@ -35,18 +35,20 @@
   align-items: center;
   justify-content: center;
 
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 #field-details-list-div {
   overflow-y: scroll;
-  border: 2px solid black;
+  /* border: 2px solid black; */
   padding: 10px;
 }
 
 #language-selection-buttons-div {
   display: flex;
   flex-direction: column;
+
+  /* border: 4px solid black; */
 }
 
 mat-progress-spinner {
@@ -64,9 +66,21 @@ mat-progress-spinner {
 
   backdrop-filter: blur(2px);
 
-  border: 1px solid green;
+  /* border: 1px solid green; */
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+mat-drawer {
+  width: 20%;
+}
+
+.language-button {
+  width: 50%;
+
+  margin: auto;
+  padding: 10px;
+  margin-top: 10px;
 }

@@ -1,4 +1,4 @@
-import { Component, Type, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Type, ViewChild } from '@angular/core';
 import { ClassDetailsFormHostDirective } from './Directives/class-details-form-host.directive';
 import { CsharpClassDetailsFormComponent } from './csharp-class-details-form/csharp-class-details-form.component';
 import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csharp-field-details-list.component';
@@ -7,17 +7,26 @@ import { FormComponent } from './Interfaces/FormComponent';
 import { FieldDetailsFormHostDirective } from './Directives/field-details-form-host.directive';
 import { FieldDetailsListHostDirective } from './Directives/field-details-list-host.directive';
 import { IDataClassLanguageComponent } from './Interfaces/IDataClassLanguageComponent';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
+  ngAfterViewInit(): void {
+    console.log(this.drawer);
+  }
+
   title = 'common-service-demo';
 
   // Whether to show the loader
   showLoader = false;
+
+  languageList = [
+    "csharp",
+  ];
 
   // Map that holds a key-value pair of
   // language to its field details form component
@@ -55,9 +64,11 @@ export class AppComponent {
   // the class details form
   @ViewChild(ClassDetailsFormHostDirective) languageDetailsFormHostDirective!: ClassDetailsFormHostDirective;
 
-  // Will create a new component containing the form
-  // for field details of the given language
-  createFieldDetailsFormComponent(language: string) {
+  @ViewChild('drawer') drawer!: MatSidenav;
+
+  // Will create new components containing the
+  // that together will take care of the data class generation
+  createLanguageComponents(language: string) {
     language = language.toLowerCase();
 
     // Create the form component
@@ -104,5 +115,9 @@ export class AppComponent {
     console.log("toggleSpinner()", showLoader);
 
     this.showLoader = showLoader;
+  }
+
+  toggleDrawer() {
+    this.drawer.toggle();
   }
 }

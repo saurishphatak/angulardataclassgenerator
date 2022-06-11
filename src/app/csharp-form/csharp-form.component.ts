@@ -1,5 +1,5 @@
 import { ThisReceiver } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CsharpService } from '../Services/csharp/csharp.service';
 import { FormComponent } from '../Interfaces/FormComponent';
@@ -11,7 +11,7 @@ import { IDataClassLanguageComponent } from '../Interfaces/IDataClassLanguageCom
   templateUrl: './csharp-form.component.html',
   styleUrls: ['./csharp-form.component.css']
 })
-export class CsharpFormComponent implements OnInit, IDataClassLanguageComponent {
+export class CsharpFormComponent implements OnInit, IDataClassLanguageComponent, OnDestroy {
 
   className = "CsharpFormComponent";
 
@@ -434,5 +434,9 @@ export class CsharpFormComponent implements OnInit, IDataClassLanguageComponent 
     }
     else
       this.extraConfigButtonColor = "warn";
+  }
+
+  ngOnDestroy(): void {
+    this.debug(`${this.className}::ngOnDestroy()`);
   }
 }
