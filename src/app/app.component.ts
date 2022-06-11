@@ -10,6 +10,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { IDataClassFieldDetailsFormComponent } from './Interfaces/IDataClassFieldDetailsFormComponent';
 import { IDataClassFieldsListComponent } from './Interfaces/IDataClassFieldsListComponent';
 import { LoaderService } from './Services/loader.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -77,6 +78,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     ]
   );
 
+  dataClassResultSubjectSubscription!: Subscription;
+
   // Reference to the directive that will host
   // the form details field
   @ViewChild(FieldDetailsFormHostDirective) fieldDetailsFormHostDirective!: FieldDetailsFormHostDirective;
@@ -137,7 +140,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
       this.classDetailsFormComponentRef = this.languageDetailsFormHostDirective.viewContainerRef.createComponent(classDetailsFormComponent!);
 
       // Subscribe to its data class result subject
-      this.classDetailsFormComponentRef.instance.languageService.dataClassResultSubject.subscribe(this.clearViewContainers.bind(this));
+      this.dataClassResultSubjectSubscription = this.classDetailsFormComponentRef.instance.languageService.dataClassResultSubject.subscribe(this.clearViewContainers.bind(this));
     }
 
     this.toggleDrawer();
@@ -145,11 +148,19 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   // Clear all view containers
   clearViewContainers() {
+    let functionName = "clearViewContainers()";
+
+    this.debug(`${this.className}::${functionName}`);
+
     this.fieldDetailsFormHostDirective?.viewContainerRef.clear();
     this.fieldDetailsListHostDirective?.viewContainerRef.clear();
 
-    // Unsubscribe from the data class result subject
-    this.classDetailsFormComponentRef?.instance?.languageService?.dataClassResultSubject?.unsubscribe();
+    try {
+      // Unsubscribe from the data class result subject
+      this.dataClassResultSubjectSubscription?.unsubscribe();
+    } catch (e) {
+      this.debug(e);
+    }
 
     this.languageDetailsFormHostDirective?.viewContainerRef.clear();
   }
