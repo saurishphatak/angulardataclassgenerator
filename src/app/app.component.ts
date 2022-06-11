@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, Type, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, OnDestroy, OnInit, Type, ViewChild } from '@angular/core';
 import { ClassDetailsFormHostDirective } from './Directives/class-details-form-host.directive';
 import { CsharpClassDetailsFormComponent } from './csharp-class-details-form/csharp-class-details-form.component';
 import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csharp-field-details-list.component';
@@ -16,16 +16,30 @@ import { LoaderService } from './Services/loader.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit, OnInit {
+export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
+
+  className = "AppComponent";
+  debug = console.log;
 
   public constructor(
     public loaderSerice: LoaderService
-  ) { }
+  ) {
+    this.debug(`${this.className}::constructor()`);
+  }
+
+  ngOnDestroy(): void {
+    let functionName = "ngOnDestroy()";
+
+    this.debug(`${this.className}::${functionName}`);
+
+    // Unsubscribe from the data class result subject and the loader service
+    this.classDetailsFormComponentRef?.instance?.languageService?.dataClassResultSubject?.unsubscribe();
+    this.classDetailsFormComponentRef?.instance?.loaderService?.showLoaderSubject?.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.loaderSerice.showLoader$.subscribe((loaderStatus) => this.showLoader = loaderStatus);
   }
-
 
   ngAfterViewInit(): void {
     console.log(this.drawer);
@@ -78,6 +92,11 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   @ViewChild('drawer') drawer!: MatSidenav;
 
+  // Reference to the all the dynamically created components
+  formComponentRef!: ComponentRef<IDataClassFieldDetailsFormComponent>;
+  listComponentRef!: ComponentRef<IDataClassFieldsListComponent>;
+  classDetailsFormComponentRef!: ComponentRef<IDataClassDetailsFormComponent>;
+
   // Will create new components containing the
   // that together will take care of the data class generation
   createLanguageComponents(language: string) {
@@ -92,7 +111,7 @@ export class AppComponent implements AfterViewInit, OnInit {
       this.fieldDetailsFormHostDirective.viewContainerRef.clear();
 
       // Create a new form component
-      let formComponentRef = this.fieldDetailsFormHostDirective.viewContainerRef.createComponent(formComponent!);
+      this.formComponentRef = this.fieldDetailsFormHostDirective.viewContainerRef.createComponent(formComponent!);
     }
 
     // Create the the list component
@@ -104,7 +123,7 @@ export class AppComponent implements AfterViewInit, OnInit {
       this.fieldDetailsListHostDirective.viewContainerRef.clear();
 
       // Create a new list component
-      let listComponentRef = this.fieldDetailsListHostDirective.viewContainerRef.createComponent(listComponent!);
+      this.listComponentRef = this.fieldDetailsListHostDirective.viewContainerRef.createComponent(listComponent!);
     }
 
     // Create the language details list component
@@ -116,10 +135,20 @@ export class AppComponent implements AfterViewInit, OnInit {
       this.languageDetailsFormHostDirective.viewContainerRef.clear();
 
       // Create the new component
-      let languageDetailsFormComponentRef = this.languageDetailsFormHostDirective.viewContainerRef.createComponent(classDetailsFormComponent!);
+      this.classDetailsFormComponentRef = this.languageDetailsFormHostDirective.viewContainerRef.createComponent(classDetailsFormComponent!);
+
+      // Subscribe to its data class result subject
+      this.classDetailsFormComponentRef.instance.languageService.dataClassResultSubject.subscribe(this.clearViewContainers.bind(this));
     }
 
     this.toggleDrawer();
+  }
+
+  // Clear all view containers
+  clearViewContainers() {
+    this.fieldDetailsFormHostDirective?.viewContainerRef.clear();
+    this.fieldDetailsListHostDirective?.viewContainerRef.clear();
+    this.languageDetailsFormHostDirective?.viewContainerRef.clear();
   }
 
   toggleDrawer() {
