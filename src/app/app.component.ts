@@ -33,7 +33,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     this.debug(`${this.className}::${functionName}`);
 
     // Unsubscribe from the data class result subject and the loader service
-    this.classDetailsFormComponentRef?.instance?.languageService?.dataClassResultSubject?.unsubscribe();
     this.classDetailsFormComponentRef?.instance?.loaderService?.showLoaderSubject?.unsubscribe();
   }
 
@@ -148,6 +147,10 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   clearViewContainers() {
     this.fieldDetailsFormHostDirective?.viewContainerRef.clear();
     this.fieldDetailsListHostDirective?.viewContainerRef.clear();
+
+    // Unsubscribe from the data class result subject
+    this.classDetailsFormComponentRef?.instance?.languageService?.dataClassResultSubject?.unsubscribe();
+
     this.languageDetailsFormHostDirective?.viewContainerRef.clear();
   }
 
