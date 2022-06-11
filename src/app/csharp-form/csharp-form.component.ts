@@ -2,16 +2,15 @@ import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CsharpService } from '../Services/csharp/csharp.service';
-import { FormComponent } from '../Interfaces/FormComponent';
 import { CsharpField } from '../Models/CsharpField';
-import { IDataClassLanguageComponent } from '../Interfaces/IDataClassLanguageComponent';
+import { IDataClassFieldDetailsFormComponent } from '../Interfaces/IDataClassFieldDetailsFormComponent';
 
 @Component({
   selector: 'app-csharp-form',
   templateUrl: './csharp-form.component.html',
   styleUrls: ['./csharp-form.component.css']
 })
-export class CsharpFormComponent implements OnInit, IDataClassLanguageComponent, OnDestroy {
+export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormComponent, OnDestroy {
 
   className = "CsharpFormComponent";
 

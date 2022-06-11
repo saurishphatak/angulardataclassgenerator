@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IDataClassService } from '../../Interfaces/IFieldDetailsService'
+import { IDataClassService } from '../../Interfaces/IDataClassService'
 import { CsharpField } from '../../Models/CsharpField';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { CsharpField } from '../../Models/CsharpField';
 export class CsharpService implements IDataClassService {
 
   constructor() { }
+
 
   dataClassResultReceivedSubject: Subject<any> = new Subject<boolean>();
 
@@ -66,6 +67,7 @@ export class CsharpService implements IDataClassService {
 
   updateFieldSubject: Subject<CsharpField> = new Subject<CsharpField>();
 
+  // Adds a new field to the collection
   addField(newField: any) {
     this.debug(this.className + "::addField()", newField);
 
@@ -75,6 +77,7 @@ export class CsharpService implements IDataClassService {
       this._fields.push(field);
   }
 
+  // Removes field with the given id from the collection
   removeField(id: number) {
     this.debug(this.className + "::removeField()", { id });
 
@@ -90,6 +93,7 @@ export class CsharpService implements IDataClassService {
     return null;
   }
 
+  // Updates the field with the given id from the collection
   updateField(id: number) {
     this.debug(this.className + "::updateField()", { id });
 
@@ -102,8 +106,19 @@ export class CsharpService implements IDataClassService {
     }
   }
 
+  // Returns all the fields
   get fields(): CsharpField[] {
     return this._fields;
+  }
+
+  // Returns the field with the given id
+  getField(id: number) {
+    let fieldIndex = this._fields.findIndex((field) => field.id == id);
+
+    if (-1 == fieldIndex)
+      return null;
+
+    return this._fields[fieldIndex];
   }
 
   generateClass() {

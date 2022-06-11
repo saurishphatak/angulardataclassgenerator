@@ -3,18 +3,30 @@ import { ClassDetailsFormHostDirective } from './Directives/class-details-form-h
 import { CsharpClassDetailsFormComponent } from './csharp-class-details-form/csharp-class-details-form.component';
 import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csharp-field-details-list.component';
 import { CsharpFormComponent } from './csharp-form/csharp-form.component';
-import { FormComponent } from './Interfaces/FormComponent';
 import { FieldDetailsFormHostDirective } from './Directives/field-details-form-host.directive';
 import { FieldDetailsListHostDirective } from './Directives/field-details-list-host.directive';
-import { IDataClassLanguageComponent } from './Interfaces/IDataClassLanguageComponent';
+import { IDataClassDetailsFormComponent } from './Interfaces/IDataClassLanguageComponent';
 import { MatSidenav } from '@angular/material/sidenav';
+import { IDataClassFieldDetailsFormComponent } from './Interfaces/IDataClassFieldDetailsFormComponent';
+import { IDataClassFieldsListComponent } from './Interfaces/IDataClassFieldsListComponent';
+import { LoaderService } from './loader.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnInit {
+
+  public constructor(
+    public loaderSerice: LoaderService
+  ) { }
+
+  ngOnInit(): void {
+    this.loaderSerice.showLoader$.subscribe((loaderStatus) => this.showLoader = loaderStatus);
+  }
+
+
   ngAfterViewInit(): void {
     console.log(this.drawer);
   }
@@ -30,7 +42,7 @@ export class AppComponent implements AfterViewInit {
 
   // Map that holds a key-value pair of
   // language to its field details form component
-  languageFieldDetailsFormComponentMap = new Map<string, Type<IDataClassLanguageComponent>>(
+  languageFieldDetailsFormComponentMap = new Map<string, Type<IDataClassFieldDetailsFormComponent>>(
     [
       ["csharp", CsharpFormComponent]
     ]
@@ -38,7 +50,7 @@ export class AppComponent implements AfterViewInit {
 
   // Map that holds a key-value pair of
   // language to its field details list component
-  languageFieldDetailsListComponent = new Map<string, Type<IDataClassLanguageComponent>>(
+  languageFieldDetailsListComponent = new Map<string, Type<IDataClassFieldsListComponent>>(
     [
       ["csharp", CsharpFieldDetailsListComponent]
     ]
@@ -46,7 +58,7 @@ export class AppComponent implements AfterViewInit {
 
   // Map that holds a key-value pair of
   // langauge to its language details form component
-  languageDetailsFormComponentMap = new Map<string, Type<IDataClassLanguageComponent>>(
+  languageDetailsFormComponentMap = new Map<string, Type<IDataClassDetailsFormComponent>>(
     [
       ["csharp", CsharpClassDetailsFormComponent]
     ]
@@ -105,16 +117,9 @@ export class AppComponent implements AfterViewInit {
 
       // Create the new component
       let languageDetailsFormComponentRef = this.languageDetailsFormHostDirective.viewContainerRef.createComponent(classDetailsFormComponent!);
-
-      // Subscribe to its service
-      languageDetailsFormComponentRef.instance.languageService.dataClassResultReceivedSubject.subscribe(this.toggleSpinner.bind(this));
     }
-  }
 
-  toggleSpinner(showLoader: boolean) {
-    console.log("toggleSpinner()", showLoader);
-
-    this.showLoader = showLoader;
+    this.toggleDrawer();
   }
 
   toggleDrawer() {

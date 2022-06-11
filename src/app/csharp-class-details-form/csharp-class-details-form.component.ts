@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IDataClassLanguageComponent } from '../Interfaces/IDataClassLanguageComponent';
+import { IDataClassDetailsFormComponent } from '../Interfaces/IDataClassLanguageComponent';
+import { ILoaderService } from '../Interfaces/ILoaderService';
+import { LoaderService } from '../loader.service';
 import { CsharpService } from '../Services/csharp/csharp.service';
 
 @Component({
@@ -8,11 +10,7 @@ import { CsharpService } from '../Services/csharp/csharp.service';
   templateUrl: './csharp-class-details-form.component.html',
   styleUrls: ['./csharp-class-details-form.component.css']
 })
-export class CsharpClassDetailsFormComponent implements OnInit, IDataClassLanguageComponent {
-
-  // Emits event to the parent componenent letting it
-  // know that the result has been received
-  @Output() resultNotReceieved = new EventEmitter<boolean>();
+export class CsharpClassDetailsFormComponent implements OnInit, IDataClassDetailsFormComponent {
 
   className = "CsharpClassDetailsFormComponent";
 
@@ -20,7 +18,8 @@ export class CsharpClassDetailsFormComponent implements OnInit, IDataClassLangua
 
   constructor(
     protected formBuilder: FormBuilder,
-    public languageService: CsharpService
+    public languageService: CsharpService,
+    public loaderService: LoaderService
   ) {
     this.formGroup = formBuilder.group({
       name: new FormControl('', Validators.required),
@@ -35,15 +34,12 @@ export class CsharpClassDetailsFormComponent implements OnInit, IDataClassLangua
   gennerateClass() {
     console.log("CsharpClassDetailsFormComponent::generateClass()");
 
-    this.languageService.dataClassResultReceivedSubject.next(true);
+    this.loaderService.showLoaderSubject.next(true);
 
     this.languageService.generateClass().then(result => {
-      console.log(result, "Emitting false now");
+      console.log(result);
 
-      this.languageService.dataClassResultReceivedSubject.next(false);
+      this.loaderService.showLoaderSubject.next(false);
     });
   }
-
-
-
 }

@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CsharpService } from '../Services/csharp/csharp.service';
 import { CsharpField } from '../Models/CsharpField';
-import { IDataClassLanguageComponent } from '../Interfaces/IDataClassLanguageComponent';
+import { IDataClassDetailsFormComponent } from '../Interfaces/IDataClassLanguageComponent';
+import { IDataClassFieldsListComponent } from '../Interfaces/IDataClassFieldsListComponent';
 
 @Component({
   selector: 'app-csharp-field-details-list',
   templateUrl: './csharp-field-details-list.component.html',
   styleUrls: ['./csharp-field-details-list.component.css']
 })
-export class CsharpFieldDetailsListComponent implements OnInit, IDataClassLanguageComponent {
+export class CsharpFieldDetailsListComponent implements OnInit, IDataClassFieldsListComponent {
 
   constructor(
     public languageService: CsharpService
