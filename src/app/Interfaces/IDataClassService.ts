@@ -25,5 +25,5 @@ export interface IDataClassService {
   // submitClassDescription(): any;
 
   // Emits the generated data class value
-  dataClassResultReceivedSubject: Subject<any>;
+  dataClassResultSubject: Subject<any>;
 }

@@ -10,9 +10,7 @@ export class CsharpService implements IDataClassService {
 
   constructor() { }
 
-
-  dataClassResultReceivedSubject: Subject<any> = new Subject<boolean>();
-
+  dataClassResultSubject: Subject<any> = new Subject<string>();
 
   // Holds all the fields
   protected _fields: CsharpField[] = [

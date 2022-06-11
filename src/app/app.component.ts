@@ -9,7 +9,7 @@ import { IDataClassDetailsFormComponent } from './Interfaces/IDataClassLanguageC
 import { MatSidenav } from '@angular/material/sidenav';
 import { IDataClassFieldDetailsFormComponent } from './Interfaces/IDataClassFieldDetailsFormComponent';
 import { IDataClassFieldsListComponent } from './Interfaces/IDataClassFieldsListComponent';
-import { LoaderService } from './loader.service';
+import { LoaderService } from './Services/loader.service';
 
 @Component({
   selector: 'app-root',

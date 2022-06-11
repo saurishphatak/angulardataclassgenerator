@@ -1,9 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IDataClassDetailsFormComponent } from '../Interfaces/IDataClassLanguageComponent';
-import { ILoaderService } from '../Interfaces/ILoaderService';
-import { LoaderService } from '../loader.service';
 import { CsharpService } from '../Services/csharp/csharp.service';
+import { LoaderService } from '../Services/loader.service';
 
 @Component({
   selector: 'app-csharp-class-details-form',
