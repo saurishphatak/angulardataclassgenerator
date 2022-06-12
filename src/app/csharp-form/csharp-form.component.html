@@ -33,7 +33,9 @@
 
   <!-- Whether to configure property and accessors -->
   <button type="button" mat-raised-button [color]="this.propertyConfigButtonColor"
-    (click)="this.togglePropertyConfig($event)">Configure Property</button>
+    (click)="this.togglePropertyConfig($event)" matTooltip="Add/remove property and accessors"
+    matTooltipPosition="right">Configure
+    Property</button>
 
   <!-- Property Configurator -->
   <mat-card *ngIf="this.showPropertyConfig">
@@ -132,8 +134,8 @@
   </mat-card>
 
   <!-- Extra Details Configurator -->
-  <button type="button" mat-raised-button [color]="this.extraConfigButtonColor"
-    (click)="this.toggleExtraConfig()">Extra</button>
+  <button type="button" mat-raised-button [color]="this.extraConfigButtonColor" (click)="this.toggleExtraConfig()"
+    matTooltip="Add/remove field comment, attributes and default value" matTooltipPosition="right">Extra</button>
   <mat-card *ngIf="this.showExtraConfig">
 
     <div id="extra-config-div" formGroupName="extraDetailsForm">
@@ -157,5 +159,6 @@
     </div>
   </mat-card>
 
-  <button id="add-field-button" (click)="onAddField()" type="button" mat-raised-button color="primary">Add</button>
+  <button id="add-field-button" (click)="onAddField()" type="button" mat-raised-button color="primary"
+    matTooltip="Add field" matTooltipPosition="right">Add</button>
 </form>

@@ -3,10 +3,12 @@
     <mat-expansion-panel-header>
       <mat-panel-title>{{ field.dataType + " " + field.name }}</mat-panel-title>
 
-      <button type="button" mat-button color="primary" (click)="this.editField($event, field.id)">
+      <button type="button" mat-button color="primary" (click)="this.editField($event, field.id)"
+        matTooltip="Edit field" matTooltipPosition="above">
         <mat-icon>edit</mat-icon>
       </button>
-      <button type="button" mat-button color="warn" (click)="this.removeField($event, field.id)">
+      <button type="button" mat-button color="warn" (click)="this.removeField($event, field.id)"
+        matTooltip="Remove field" matTooltipPosition="above">
         <mat-icon>delete</mat-icon>
       </button>
     </mat-expansion-panel-header>
