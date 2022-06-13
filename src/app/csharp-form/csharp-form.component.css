@@ -32,3 +32,15 @@
   margin: 10px;
   /* border: 1px solid red; */
 }
+
+#main-field-details-div {
+  display: flex;
+  flex-direction: column;
+
+  padding: 10px;
+}
+
+#main-field-details-header-div {
+  display: flex;
+  justify-content: center;
+}

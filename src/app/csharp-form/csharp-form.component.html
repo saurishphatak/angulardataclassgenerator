@@ -1,41 +1,49 @@
 <form id="csharp-field-details-form" [formGroup]="formGroup">
-  <!-- Field Name -->
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput type="text" formControlName="name">
-  </mat-form-field>
-
-  <!-- Field Data Type -->
-  <mat-form-field>
-    <mat-label>Data Type</mat-label>
-    <input matInput type="text" formControlName="dataType">
-  </mat-form-field>
-
-  <!-- Field Access Modifier Button Group -->
   <mat-card>
-    <mat-card-subtitle>Field Access Modifier</mat-card-subtitle>
-    <mat-card-content>
-      <mat-button-toggle-group formControlName="accessModifier">
-        <!-- Public -->
-        <mat-button-toggle value="public" [checked]="this.fieldAccessModifierButtons.publicField"
-          (click)="this.toggleFieldAccessModifier('public')">public
-        </mat-button-toggle>
-        <mat-button-toggle value="private" [checked]="this.fieldAccessModifierButtons.privateField"
-          (click)="this.toggleFieldAccessModifier('private')">private
-        </mat-button-toggle>
-        <mat-button-toggle value="protected" [checked]="this.fieldAccessModifierButtons.protectedField"
-          (click)="this.toggleFieldAccessModifier('protected')">protected
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </mat-card-content>
+    <mat-card-subtitle>
+      <div id="main-field-details-header-div">
+        <h3>Field Details</h3>
+      </div>
+    </mat-card-subtitle>
+    <div id="main-field-details-div">
+      <!-- Field Name -->
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name">
+      </mat-form-field>
+
+      <!-- Field Data Type -->
+      <mat-form-field>
+        <mat-label>Data Type</mat-label>
+        <input matInput type="text" formControlName="dataType">
+      </mat-form-field>
+
+      <!-- Field Access Modifier Button Group -->
+      <mat-card-subtitle>Field Access Modifier</mat-card-subtitle>
+      <mat-card-content>
+        <mat-button-toggle-group formControlName="accessModifier">
+          <!-- Public -->
+          <mat-button-toggle value="public" [checked]="this.fieldAccessModifierButtons.publicField"
+            (click)="this.toggleFieldAccessModifier('public')">public
+          </mat-button-toggle>
+          <mat-button-toggle value="private" [checked]="this.fieldAccessModifierButtons.privateField"
+            (click)="this.toggleFieldAccessModifier('private')">private
+          </mat-button-toggle>
+          <mat-button-toggle value="protected" [checked]="this.fieldAccessModifierButtons.protectedField"
+            (click)="this.toggleFieldAccessModifier('protected')">protected
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </mat-card-content>
+    </div>
   </mat-card>
   <br>
 
   <!-- Whether to configure property and accessors -->
   <button type="button" mat-raised-button [color]="this.propertyConfigButtonColor"
     (click)="this.togglePropertyConfig($event)" matTooltip="Add/remove property and accessors"
-    matTooltipPosition="right">Configure
-    Property</button>
+    matTooltipPosition="right">
+    Confugure Property
+  </button>
 
   <!-- Property Configurator -->
   <mat-card *ngIf="this.showPropertyConfig">
@@ -136,8 +144,8 @@
   <!-- Extra Details Configurator -->
   <button type="button" mat-raised-button [color]="this.extraConfigButtonColor" (click)="this.toggleExtraConfig()"
     matTooltip="Add/remove field comment, attributes and default value" matTooltipPosition="right">Extra</button>
-  <mat-card *ngIf="this.showExtraConfig">
 
+  <mat-card *ngIf="this.showExtraConfig">
     <div id="extra-config-div" formGroupName="extraDetailsForm">
       <!-- Default Value -->
       <mat-form-field>
@@ -158,7 +166,7 @@
       </mat-form-field>
     </div>
   </mat-card>
-
+  <!-- Add field button -->
   <button id="add-field-button" (click)="onAddField()" type="button" mat-raised-button color="primary"
     matTooltip="Add field" matTooltipPosition="right">Add</button>
 </form>
