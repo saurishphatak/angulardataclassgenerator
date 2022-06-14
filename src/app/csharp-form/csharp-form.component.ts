@@ -199,19 +199,19 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
         let setterAttributes = this.formGroup.get('propertyForm.setterAttributes')?.value;
         let initializerAttributes = this.formGroup.get('propertyForm.initializerAttributes')?.value;
 
-        if (getterAttributes?.length > 0) {
+        if (this.isGetterEnabled) {
           this.debug(`${this.className}::${functionName}`, getterAttributes);
 
           accessors.set('getter', { getterAttributes });
         }
 
-        if (setterAttributes?.length > 0) {
+        if (this.isSetterEnabled) {
           this.debug(`${this.className}::${functionName}`, setterAttributes);
 
           accessors.set('setter', { setterAttributes });
         }
 
-        if (initializerAttributes?.length > 0) {
+        if (this.isInitEnabled) {
           this.debug(`${this.className}::${functionName}`, initializerAttributes);
 
           accessors.set('initializer', { initializerAttributes });
@@ -346,6 +346,19 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
     if (field?.propertyName?.length > 0) {
       this.showPropertyConfig = true;
       this.propertyConfigButtonColor = "warn";
+
+      // Expand the accessor panels
+      if (field?.accessors.get('getter')?.getterAttributes?.length > 0) {
+        this.isGetterEnabled = true;
+      }
+
+      if (field?.accessors.get('setter')?.setterAttributes?.length > 0) {
+        this.isSetterEnabled = true;
+      }
+
+      if (field?.accessors.get('initializer')?.initializerAttributes?.length > 0) {
+        this.isInitEnabled = true;
+      }
     }
 
     if (field?.defaultValue?.length > 0 || field?.comment?.length > 0 || field?.fieldAttributes?.length > 0) {
@@ -362,6 +375,10 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
 
     this.isSetterEnabled = !this.isSetterEnabled;
     this.isInitEnabled = false;
+
+    if (!this.isSetterEnabled) {
+      this.formGroup.get("propertyForm.setterAttributes")?.reset("");
+    }
   }
 
   // Toggles whether initializer form is to be
@@ -372,12 +389,21 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
 
     this.isInitEnabled = !this.isInitEnabled;
     this.isSetterEnabled = false;
+
+    if (!this.isInitEnabled) {
+      this.formGroup.get("propertyForm.initializerAttributes")?.reset("");
+    }
   }
 
   // Toggles whether getter form is to be
   // displayed or not
   toggleGetter() {
     this.isGetterEnabled = !this.isGetterEnabled;
+
+    // If the getter is not enabled, clear its attributes
+    if (!this.isGetterEnabled) {
+      this.formGroup.get("propertyForm.getterAttributes")?.reset("");
+    }
   }
 
   // Toggles the access modifier for the field
