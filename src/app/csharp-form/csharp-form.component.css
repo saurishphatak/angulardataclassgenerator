@@ -38,6 +38,8 @@
   flex-direction: column;
 
   padding: 10px;
+
+  /* border: 1px solid red; */
 }
 
 .header-div {
@@ -52,4 +54,8 @@ mat-card {
 #constructor-button-toggle-div {
   display: flex;
   justify-content: center;
+}
+
+.csharp-field-details-form-button {
+  margin: 5px;
 }
