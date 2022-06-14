@@ -3,3 +3,13 @@
   flex-direction: column;
   padding: 10px;
 }
+
+.header-div {
+  display: flex;
+  justify-content: center;
+}
+
+#constructor-button-toggle-div {
+  display: flex;
+  justify-content: center;
+}

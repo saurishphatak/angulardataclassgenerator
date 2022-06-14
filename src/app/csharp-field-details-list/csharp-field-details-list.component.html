@@ -44,6 +44,12 @@
         <input type="text" matInput [value]="field.accessModifier" readonly>
       </mat-form-field>
 
+      <!-- Is Constructor Param -->
+      <mat-form-field>
+        <mat-label>Is Parameter in Constructor?</mat-label>
+        <input type="text" matInput [value]="field.isConstructorParam ? 'Yes' : 'No'" readonly>
+      </mat-form-field>
+
       <!-- Property Details Accordion -->
       <mat-accordion *ngIf="field.propertyName">
         <mat-expansion-panel>
