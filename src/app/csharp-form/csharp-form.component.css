@@ -40,7 +40,16 @@
   padding: 10px;
 }
 
-#main-field-details-header-div {
+.header-div {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card {
+  margin: 10px;
+}
+
+#constructor-button-toggle-div {
   display: flex;
   justify-content: center;
 }

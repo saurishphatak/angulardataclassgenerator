@@ -24,7 +24,8 @@ export class CsharpService implements IDataClassService {
       "",
       "virtual",
       "public",
-      new Map<string, any>()
+      new Map<string, any>(),
+      false
     ),
     new CsharpField(
       "phoneNumber",
@@ -57,6 +58,7 @@ export class CsharpService implements IDataClassService {
           ["getter", "[Required]"]
         ]
       ),
+      false
     )
   ];
 

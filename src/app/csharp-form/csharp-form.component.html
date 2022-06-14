@@ -1,10 +1,12 @@
 <form id="csharp-field-details-form" [formGroup]="formGroup">
+  <!-- Contains the basic details needed for field -->
   <mat-card>
     <mat-card-subtitle>
-      <div id="main-field-details-header-div">
+      <div class="header-div">
         <h3>Field Details</h3>
       </div>
     </mat-card-subtitle>
+
     <div id="main-field-details-div">
       <!-- Field Name -->
       <mat-form-field>
@@ -19,21 +21,43 @@
       </mat-form-field>
 
       <!-- Field Access Modifier Button Group -->
-      <mat-card-subtitle>Field Access Modifier</mat-card-subtitle>
-      <mat-card-content>
-        <mat-button-toggle-group formControlName="accessModifier">
-          <!-- Public -->
-          <mat-button-toggle value="public" [checked]="this.fieldAccessModifierButtons.publicField"
-            (click)="this.toggleFieldAccessModifier('public')">public
-          </mat-button-toggle>
-          <mat-button-toggle value="private" [checked]="this.fieldAccessModifierButtons.privateField"
-            (click)="this.toggleFieldAccessModifier('private')">private
-          </mat-button-toggle>
-          <mat-button-toggle value="protected" [checked]="this.fieldAccessModifierButtons.protectedField"
-            (click)="this.toggleFieldAccessModifier('protected')">protected
-          </mat-button-toggle>
-        </mat-button-toggle-group>
-      </mat-card-content>
+      <mat-card>
+        <mat-card-subtitle>
+          <div class="header-div">
+            <h4>Field Access Modifier</h4>
+          </div>
+        </mat-card-subtitle>
+        <mat-card-content>
+          <mat-button-toggle-group formControlName="accessModifier">
+            <!-- Public -->
+            <mat-button-toggle value="public" [checked]="this.fieldAccessModifierButtons.publicField"
+              (click)="this.toggleFieldAccessModifier('public')">public
+            </mat-button-toggle>
+            <mat-button-toggle value="private" [checked]="this.fieldAccessModifierButtons.privateField"
+              (click)="this.toggleFieldAccessModifier('private')">private
+            </mat-button-toggle>
+            <mat-button-toggle value="protected" [checked]="this.fieldAccessModifierButtons.protectedField"
+              (click)="this.toggleFieldAccessModifier('protected')">protected
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Whether to include the field in the constructor -->
+      <mat-card>
+        <mat-card-subtitle>
+          <div class="header-div">
+            <h4>Include in Constructor</h4>
+          </div>
+        </mat-card-subtitle>
+        <mat-card-content>
+          <div id="constructor-button-toggle-div">
+            <mat-slide-toggle [checked]="this.isConstructorParam" (click)="this.toggleConstructorParam()">
+            </mat-slide-toggle>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
     </div>
   </mat-card>
   <br>
@@ -166,6 +190,7 @@
       </mat-form-field>
     </div>
   </mat-card>
+
   <!-- Add field button -->
   <button id="add-field-button" (click)="onAddField()" type="button" mat-raised-button color="primary"
     matTooltip="Add field" matTooltipPosition="right">Add</button>

@@ -13,7 +13,8 @@ export class CsharpField {
     public propertyName: string,
     public propertyType: string = 'virtual',
     public propertyAccessModifier: string = 'public',
-    public accessors: Map<string, any>
+    public accessors: Map<string, any>,
+    public isConstructorParam: boolean = true
   ) {
   }
 }

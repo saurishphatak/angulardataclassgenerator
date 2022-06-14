@@ -51,6 +51,9 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
   isSetterEnabled = false;
   isInitEnabled = false;
 
+  // Whether the field will be in the constuctor as a parameter
+  isConstructorParam = true;
+
   // Property configuration controls
   showPropertyConfig = false;
   propertyConfigButtonColor = "primary";
@@ -188,7 +191,8 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
         "",
         "virtual",
         this.formGroup.get("propertyForm.propertyAccessModifier")?.value,
-        accessors
+        accessors,
+        this.isConstructorParam
       );
 
       // If the property is to be generated and the property name is given
@@ -258,7 +262,7 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
     // changes
     this.toggleFieldAccessModifier('public');
 
-
+    this.isConstructorParam = true;
     this.resetPropertyForm();
     this.resetExtraDetailsForm();
   }
@@ -342,6 +346,7 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
     this.toggleFieldAccessModifier(field?.accessModifier);
     this.togglePropertyAccessModifier(field?.propertyAccessModifier);
     this.togglePropertyType(field?.propertyType);
+    this.isConstructorParam = field?.isConstructorParam;
 
     if (field?.propertyName?.length > 0) {
       this.showPropertyConfig = true;
@@ -463,5 +468,12 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
 
   ngOnDestroy(): void {
     this.debug(`${this.className}::ngOnDestroy()`);
+  }
+
+  toggleConstructorParam() {
+    let functionName = "toggleConstructorParam()";
+
+    this.isConstructorParam = !this.isConstructorParam;
+    this.debug(`${this.className}::${functionName}`, this.isConstructorParam);
   }
 }
