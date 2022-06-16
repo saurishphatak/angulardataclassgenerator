@@ -54,6 +54,8 @@ mat-card {
 #constructor-button-toggle-div {
   display: flex;
   justify-content: center;
+
+  /* border: 1px solid red; */
 }
 
 .csharp-field-details-form-button {

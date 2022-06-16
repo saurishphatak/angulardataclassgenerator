@@ -44,16 +44,22 @@
       </mat-card>
 
       <!-- Whether to include the field in the constructor -->
+      <!--! TODO : Not getting updated when editing field properly  -->
       <mat-card>
         <mat-card-subtitle>
           <div class="header-div">
-            <h4>Include in Constructor</h4>
+            <h4>Initialize in Constructor?</h4>
           </div>
         </mat-card-subtitle>
+
         <mat-card-content>
           <div id="constructor-button-toggle-div">
-            <mat-slide-toggle [checked]="this.isConstructorParam" (click)="this.toggleConstructorParam()">
-            </mat-slide-toggle>
+            <mat-button-toggle-group>
+              <mat-button-toggle [checked]="this.isConstructorParam" (click)="this.toggleConstructorParam()">Yes
+              </mat-button-toggle>
+              <mat-button-toggle [checked]="!this.isConstructorParam" (click)="this.toggleConstructorParam()">No
+              </mat-button-toggle>
+            </mat-button-toggle-group>
           </div>
         </mat-card-content>
       </mat-card>
