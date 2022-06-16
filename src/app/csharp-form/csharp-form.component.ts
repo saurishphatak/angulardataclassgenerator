@@ -1,9 +1,9 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CsharpService } from '../Services/csharp/csharp.service';
 import { CsharpField } from '../Models/CsharpField';
 import { IDataClassFieldDetailsFormComponent } from '../Interfaces/IDataClassFieldDetailsFormComponent';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-csharp-form',
@@ -14,7 +14,7 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
 
   className = "CsharpFormComponent";
 
-  debug = console.log;
+  debug = environment.production ? console.log : () => { };
 
   // Form group for getting the field
   // details of a csharp field
@@ -155,9 +155,16 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
 
   constructor(
     public languageService: CsharpService
-  ) { }
+  ) {
+    this.debug(`${this.className}::constructo()`, languageService);
+  }
+
 
   ngOnInit(): void {
+    let functionName = "ngOnInit()";
+
+    this.debug(`${this.className}::${functionName}`);
+
     // Initially, the accessModifier will be public
     this.toggleFieldAccessModifier('public');
 
@@ -169,6 +176,8 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
   // Handler for field details submission
   onAddField() {
     let functionName = "onAddField()";
+
+    this.debug(`${this.className}::${functionName}`);
 
     // Name and DataType of a field are required
     let nameFormControl = this.formGroup.get('name');
@@ -375,6 +384,10 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
   // Toggles whether setter form is to be
   // displayed or not
   toggleSetter() {
+    let functionName = "toggleSetter()";
+
+    this.debug(`${this.className}::${functionName}`);
+
     // Clear the intializer accessor attributes
     (this.formGroup.get('propertyForm') as FormGroup).patchValue({ initializerAttributes: "" });
 
@@ -389,6 +402,10 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
   // Toggles whether initializer form is to be
   // displayed or not
   toggleInitializer() {
+    let functionName = "toggleInitializer()";
+
+    this.debug(`${this.className}::${functionName}`);
+
     // Clear the setter accessor attributes
     (this.formGroup.get('propertyForm') as FormGroup).patchValue({ setterAttributes: "" });
 
