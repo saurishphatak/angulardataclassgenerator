@@ -50,6 +50,12 @@
         <input type="text" matInput [value]="field.isConstructorParam ? 'Yes' : 'No'" readonly>
       </mat-form-field>
 
+      <!-- Field Attributes -->
+      <mat-form-field *ngIf="field.fieldAttributes && field.fieldAttributes.length > 0">
+        <mat-label>Field Attributes</mat-label>
+        <input type="text" matInput [value]="field?.fieldAttributes" readonly>
+      </mat-form-field>
+
       <!-- Property Details Accordion -->
       <mat-accordion *ngIf="field.propertyName">
         <mat-expansion-panel>
@@ -64,11 +70,23 @@
             <input type="text" matInput [value]="field.propertyName" readonly>
           </mat-form-field>
 
+          <!-- Property Access Modifier -->
+          <mat-form-field>
+            <mat-label>Property Access Modifier</mat-label>
+            <input type="text" matInput [value]="field.propertyAccessModifier" readonly>
+          </mat-form-field>
+
           <!-- Property Type -->
           <mat-form-field>
             <mat-label>Property Type (virtual/abstract)</mat-label>
             <input type="text" matInput [value]="field.propertyType" readonly>
           </mat-form-field>
+
+          <!-- Property Attributes -->
+          <!-- <mat-form-field>
+            <mat-label>Property Attributes</mat-label>
+            <input type="text" matInput [value]="field.propertyAttributes" readonly>
+          </mat-form-field> -->
 
           <!-- Accessor Details Accordion -->
           <mat-accordion *ngIf="field.accessors.size > 0">
