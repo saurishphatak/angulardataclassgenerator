@@ -1,16 +1,28 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IDataClassService } from '../../Interfaces/IDataClassService'
+import { IDataClassService } from 'src/app/Interfaces/IDataClassService';
+import { environment } from 'src/environments/environment.prod';
 import { CsharpField } from '../../Models/CsharpField';
+import { BaseService } from '../BaseService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CsharpService implements IDataClassService {
+export class CsharpService extends BaseService {
+  protected override className = "CsharpService";
 
-  constructor() { }
+  override debug = environment.production ? () => { } : console.log;
 
-  dataClassResultSubject: Subject<any> = new Subject<string>();
+  constructor(httpClient: HttpClient) {
+    super(httpClient);
+
+    this.debug(`${this.className}::constructor()`);
+  }
+
+  override dataClassResultSubject: Subject<any> = new Subject<string>();
+
+  override updateFieldSubject: Subject<CsharpField> = new Subject<CsharpField>();
 
   // Holds all the fields
   protected _fields: CsharpField[] = [
@@ -76,11 +88,6 @@ export class CsharpService implements IDataClassService {
     )
   ];
 
-  private className = "CsharpService";
-  private debug = console.log;
-
-  updateFieldSubject: Subject<CsharpField> = new Subject<CsharpField>();
-
   // Adds a new field to the collection
   addField(newField: any) {
     this.debug(this.className + "::addField()", newField);
@@ -133,14 +140,5 @@ export class CsharpService implements IDataClassService {
       return null;
 
     return this._fields[fieldIndex];
-  }
-
-  generateClass() {
-    return new Promise<string>((resolve, reject) => {
-      setTimeout(
-        () => { resolve("result"); },
-        5000
-      );
-    });
   }
 }

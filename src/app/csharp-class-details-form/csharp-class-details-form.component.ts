@@ -33,17 +33,8 @@ export class CsharpClassDetailsFormComponent implements OnInit, IDataClassDetail
   gennerateClass() {
     console.log("CsharpClassDetailsFormComponent::generateClass()");
 
-    // Show the loader
-    this.loaderService.showLoaderSubject.next(true);
-
-    this.languageService.generateClass().then(result => {
-      // Process the result
+    this.languageService.generateClass().subscribe(result => {
       console.log(result);
-
-      // Hide the loader
-      this.loaderService.showLoaderSubject.next(false);
-
-      // Let the parent know that the result has been recieved
       this.languageService.dataClassResultSubject.next(result);
     });
   }

@@ -23,6 +23,9 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CsharpService } from './Services/csharp/csharp.service';
+import { NetworkInterceptor } from './network.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,10 +53,12 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     MatSidenavModule,
     MatListModule,
     MatTooltipModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    HttpClientModule
   ],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+    { provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
