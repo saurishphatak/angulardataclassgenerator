@@ -1,20 +1,40 @@
-export class CsharpField {
+import { ICsharpProperty } from "./CsharpProperty";
+
+export class CsharpField implements ICsharpField {
+
+  public name: string;
+  public dataType = "";
+  public defaultValue = "";
+  public comment = "";
+  public fieldAttributes = "";
+  public property: ICsharpProperty;
+  public isConstructorParam: boolean = true;
+  public accessModifier = "public";
+
   protected static _lastID = 0;
 
   public id = ++CsharpField._lastID;
 
   public constructor(
-    public name: string,
-    public dataType: string,
-    public defaultValue: string = '',
-    public comment: string = '',
-    public fieldAttributes: string = '',
-    public accessModifier: string = 'public',
-    public propertyName: string,
-    public propertyType: string = 'virtual',
-    public propertyAccessModifier: string = 'public',
-    public accessors: Map<string, any>,
-    public isConstructorParam: boolean = true
+    initialValues: ICsharpField
   ) {
+    this.name = initialValues.name;
+    this.dataType = initialValues.dataType;
+    this.comment = initialValues.comment;
+    this.fieldAttributes = initialValues.fieldAttributes;
+    this.property = initialValues.property;
+    this.isConstructorParam = initialValues.isConstructorParam;
+    this.accessModifier = initialValues.accessModifier;
   }
+}
+
+interface ICsharpField {
+  name: string;
+  dataType: string;
+  accessModifier: string;
+  defaultValue: string;
+  comment: string;
+  fieldAttributes: string;
+  property: ICsharpProperty;
+  isConstructorParam: boolean;
 }

@@ -4,6 +4,7 @@ import { CsharpService } from '../Services/csharp/csharp.service';
 import { CsharpField } from '../Models/CsharpField';
 import { IDataClassFieldDetailsFormComponent } from '../Interfaces/IDataClassFieldDetailsFormComponent';
 import { environment } from 'src/environments/environment.prod';
+import { CsharpProperty } from '../Models/CsharpProperty';
 
 @Component({
   selector: 'app-csharp-form',
@@ -37,6 +38,7 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
           propertyName: new FormControl('', Validators.required),
           propertyAccessModifier: new FormControl('public'),
           propertyType: new FormControl('virtual'),
+          propertyAttributes: new FormControl(''),
           getterAttributes: new FormControl(''),
           setterAttributes: new FormControl(''),
           initializerAttributes: new FormControl('')
@@ -191,17 +193,25 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
       let accessors = new Map<string, any>();
 
       let csharpField = new CsharpField(
-        nameFormControl?.value,
-        dataTypeFormControl?.value,
-        this.formGroup.get("extraDetailsForm.defaultValue")?.value,
-        this.formGroup.get("extraDetailsForm.comment")?.value,
-        this.formGroup.get("extraDetailsForm.fieldAttributes")?.value,
-        this.formGroup.get("accessModifier")?.value,
-        "",
-        "virtual",
-        this.formGroup.get("propertyForm.propertyAccessModifier")?.value,
-        accessors,
-        this.isConstructorParam
+        {
+          name: nameFormControl?.value ?? "",
+          dataType: dataTypeFormControl?.value ?? "public",
+          accessModifier: this.formGroup.get("accessModifier")?.value,
+          defaultValue: this.formGroup.get("defaultValue")?.value ?? "",
+          comment: this.formGroup.get("comment")?.value ?? "",
+          fieldAttributes: this.formGroup.get("fieldAttributes")?.value ?? "",
+          isConstructorParam: this.isConstructorParam,
+
+          property: new CsharpProperty(
+            {
+              propertyName: "",
+              propertyAccessModifier: "public",
+              propertyType: "virtual",
+              propertyAttributes: "",
+              accessors: accessors
+            }
+          )
+        }
       );
 
       // If the property is to be generated and the property name is given
@@ -230,9 +240,10 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
           accessors.set('initializer', { initializerAttributes });
         }
 
-        // Set the corresponding properties in the Csharp field object
-        csharpField.propertyName = propertyNameFormControl?.value;
-        csharpField.propertyType = this.formGroup.get("propertyForm.propertyType")?.value;
+        // Set the corresponding properties in the Csharp property object
+        csharpField.property.propertyName = propertyNameFormControl?.value;
+        csharpField.property.propertyType = this.formGroup.get("propertyForm.propertyType")?.value;
+        csharpField.property.propertyAttributes = this.formGroup.get("propertyForm.propertyAttributes")?.value ?? "";
 
         // Add the field to the list
         this.languageService.addField(csharpField);
@@ -289,6 +300,7 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
         propertyName: '',
         propertyType: 'virtual',
         propertyAccessModifer: 'public',
+        propertyAttributes: "",
         getterAttributes: '',
         setterAttributes: '',
         initializerAttributes: ''
@@ -341,36 +353,37 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
 
         propertyForm:
         {
-          propertyName: field?.propertyName ?? "",
-          propertyType: field?.propertyType ?? "virtual",
-          propertyAccessModifier: field?.propertyAccessModifier ?? "public",
-          getterAttributes: field?.accessors.get('getter')?.getterAttributes ?? "",
-          setterAttributes: field?.accessors.get('setter')?.setterAttributes ?? "",
-          initializerAttributes: field?.accessors.get('initializer')?.initializerAttributes ?? ""
+          propertyName: field?.property?.propertyName ?? "",
+          propertyType: field?.property?.propertyType ?? "virtual",
+          propertyAccessModifier: field?.property?.propertyAccessModifier ?? "public",
+          propertyAttributes: field?.property?.propertyAttributes ?? "",
+          getterAttributes: field?.property?.accessors.get('getter')?.getterAttributes ?? "",
+          setterAttributes: field?.property?.accessors.get('setter')?.setterAttributes ?? "",
+          initializerAttributes: field?.property?.accessors.get('initializer')?.initializerAttributes ?? ""
         }
       }
     );
 
     // Update the UI based on the field
     this.toggleFieldAccessModifier(field?.accessModifier);
-    this.togglePropertyAccessModifier(field?.propertyAccessModifier);
-    this.togglePropertyType(field?.propertyType);
+    this.togglePropertyAccessModifier(field?.property?.propertyAccessModifier);
+    this.togglePropertyType(field?.property?.propertyType);
     this.isConstructorParam = field?.isConstructorParam;
 
-    if (field?.propertyName?.length > 0) {
+    if (field?.property?.propertyName?.length > 0) {
       this.showPropertyConfig = true;
       this.propertyConfigButtonColor = "warn";
 
       // Expand the accessor panels
-      if (field?.accessors.get('getter')?.getterAttributes?.length > 0) {
+      if (field?.property?.accessors.get('getter')?.getterAttributes?.length > 0) {
         this.isGetterEnabled = true;
       }
 
-      if (field?.accessors.get('setter')?.setterAttributes?.length > 0) {
+      if (field?.property?.accessors.get('setter')?.setterAttributes?.length > 0) {
         this.isSetterEnabled = true;
       }
 
-      if (field?.accessors.get('initializer')?.initializerAttributes?.length > 0) {
+      if (field?.property?.accessors.get('initializer')?.initializerAttributes?.length > 0) {
         this.isInitEnabled = true;
       }
     }

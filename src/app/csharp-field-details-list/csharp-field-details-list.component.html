@@ -57,41 +57,41 @@
       </mat-form-field>
 
       <!-- Property Details Accordion -->
-      <mat-accordion *ngIf="field.propertyName">
+      <mat-accordion *ngIf="field.property.propertyName">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>Property</mat-panel-title>
-            <mat-panel-description>{{ field.propertyName }}</mat-panel-description>
+            <mat-panel-description>{{ field.property.propertyName }}</mat-panel-description>
           </mat-expansion-panel-header>
 
           <!-- Property Name -->
           <mat-form-field>
             <mat-label>Property Name</mat-label>
-            <input type="text" matInput [value]="field.propertyName" readonly>
+            <input type="text" matInput [value]="field.property.propertyName" readonly>
           </mat-form-field>
 
           <!-- Property Access Modifier -->
           <mat-form-field>
             <mat-label>Property Access Modifier</mat-label>
-            <input type="text" matInput [value]="field.propertyAccessModifier" readonly>
+            <input type="text" matInput [value]="field.property.propertyAccessModifier" readonly>
           </mat-form-field>
 
           <!-- Property Type -->
           <mat-form-field>
             <mat-label>Property Type (virtual/abstract)</mat-label>
-            <input type="text" matInput [value]="field.propertyType" readonly>
+            <input type="text" matInput [value]="field.property.propertyType" readonly>
           </mat-form-field>
 
           <!-- Property Attributes -->
-          <!-- <mat-form-field>
+          <mat-form-field>
             <mat-label>Property Attributes</mat-label>
-            <input type="text" matInput [value]="field.propertyAttributes" readonly>
-          </mat-form-field> -->
+            <input type="text" matInput [value]="field.property.propertyAttributes" readonly>
+          </mat-form-field>
 
           <!-- Accessor Details Accordion -->
-          <mat-accordion *ngIf="field.accessors.size > 0">
+          <mat-accordion *ngIf="field.property.accessors.size > 0">
             <!-- Getter Accessor Details -->
-            <mat-expansion-panel *ngIf="field.accessors.has('getter')">
+            <mat-expansion-panel *ngIf="field.property.accessors.has('getter')">
               <!-- Getter Accessor Details -->
               <mat-expansion-panel-header>
                 <mat-panel-title>Getter</mat-panel-title>
@@ -99,12 +99,13 @@
 
               <mat-form-field>
                 <mat-label>Attributes</mat-label>
-                <textarea matInput readonly [value]="field.accessors.get('getter')?.getterAttributes"></textarea>
+                <textarea matInput readonly
+                  [value]="field.property.accessors.get('getter')?.getterAttributes"></textarea>
               </mat-form-field>
             </mat-expansion-panel>
 
             <!-- Setter Accessor Details -->
-            <mat-expansion-panel *ngIf="field.accessors.has('setter')">
+            <mat-expansion-panel *ngIf="field.property.accessors.has('setter')">
               <mat-expansion-panel-header>
                 <mat-panel-title>Setter</mat-panel-title>
               </mat-expansion-panel-header>
@@ -112,12 +113,12 @@
               <mat-form-field>
                 <mat-label>Attributes</mat-label>
                 <textarea readonly matInput
-                  [value]="field.accessors.get('setter')?.setterAttributes">Something</textarea>
+                  [value]="field.property.accessors.get('setter')?.setterAttributes">Something</textarea>
               </mat-form-field>
             </mat-expansion-panel>
 
             <!-- Initializer Accessor Details -->
-            <mat-expansion-panel *ngIf="field.accessors.has('initializer')">
+            <mat-expansion-panel *ngIf="field.property.accessors.has('initializer')">
               <mat-expansion-panel-header>
                 <mat-panel-title>Initializer</mat-panel-title>
               </mat-expansion-panel-header>
@@ -125,7 +126,7 @@
               <mat-form-field>
                 <mat-label>Attributes</mat-label>
                 <textarea readonly matInput
-                  [value]="field.accessors.get('initializer')?.initializerAttributes"></textarea>
+                  [value]="field.property.accessors.get('initializer')?.initializerAttributes"></textarea>
               </mat-form-field>
             </mat-expansion-panel>
 

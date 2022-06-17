@@ -44,7 +44,6 @@
       </mat-card>
 
       <!-- Whether to include the field in the constructor -->
-      <!--! TODO : Not getting updated when editing field properly  -->
       <mat-card>
         <mat-card-subtitle>
           <div class="header-div">
@@ -93,6 +92,13 @@
         </mat-button-toggle>
       </mat-button-toggle-group>
 
+      <!-- Property Attributes -->
+      <div class="attributes-div">
+        <mat-form-field>
+          <mat-label>Property Attributes</mat-label>
+          <textarea matInput formControlName="propertyAttributes"></textarea>
+        </mat-form-field>
+      </div>
 
       <!-- Property Access Modifier Button Group -->
       <mat-card>
@@ -123,6 +129,7 @@
         </mat-button-toggle>
       </div>
 
+      <!-- Accessor Accordion -->
       <mat-accordion multi="true">
         <!-- Getter -->
         <mat-expansion-panel *ngIf="this.isGetterEnabled" [expanded]="this.isGetterEnabled">
@@ -130,12 +137,14 @@
             <mat-panel-title>Getter</mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="expansion-panel-body-div">
+
+          <div class="attributes-div">
             <mat-form-field>
               <mat-label>Attributes</mat-label>
               <textarea matInput formControlName="getterAttributes"></textarea>
             </mat-form-field>
           </div>
+
 
         </mat-expansion-panel>
 
@@ -145,12 +154,13 @@
             <mat-panel-title>Setter</mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="expansion-panel-body-div">
+          <div class="attributes-div">
             <mat-form-field>
               <mat-label>Attributes</mat-label>
               <textarea matInput formControlName="setterAttributes"></textarea>
             </mat-form-field>
           </div>
+
         </mat-expansion-panel>
 
         <!-- Initializer -->
@@ -159,12 +169,13 @@
             <mat-panel-title>Initializer</mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="expansion-panel-body-div">
+          <div class="attributes-div">
             <mat-form-field>
               <mat-label>Attributes</mat-label>
               <textarea matInput formControlName="initializerAttributes"></textarea>
             </mat-form-field>
           </div>
+
         </mat-expansion-panel>
       </mat-accordion>
     </div>
@@ -190,10 +201,12 @@
       </mat-form-field>
 
       <!-- Field Attributes -->
-      <mat-form-field>
-        <mat-label>Field Attributes</mat-label>
-        <textarea matInput formControlName="fieldAttributes"></textarea>
-      </mat-form-field>
+      <div class="attributes-div">
+        <mat-form-field>
+          <mat-label>Field Attributes</mat-label>
+          <textarea matInput formControlName="fieldAttributes"></textarea>
+        </mat-form-field>
+      </div>
     </div>
   </mat-card>
 

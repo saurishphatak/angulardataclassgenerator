@@ -12,6 +12,7 @@
 #getter-setter-init-button-group-div {
   display: flex;
   margin: 10px;
+
 }
 
 #property-config-div {
@@ -60,4 +61,9 @@ mat-card {
 
 .csharp-field-details-form-button {
   margin: 5px;
+}
+
+.attributes-div {
+  margin: 10px;
+  /* border: 1px solid red; */
 }
