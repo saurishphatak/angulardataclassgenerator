@@ -21,11 +21,13 @@ export abstract class BaseService implements IDataClassService {
 
   dataClassResultSubject: Subject<any> = new Subject<any>();
 
-  generateClass() {
+  generateClass(dataClassDescription: any) {
     let functionName = "generateClass()";
 
-    this.debug(`${this.className}::${functionName}`);
+    this.debug(`${this.className}::${functionName}`, dataClassDescription);
 
-    return this.httpClient.get(environment.baseURL);
+    return this.httpClient.post(environment.baseURL + "/csharp", dataClassDescription, {
+      responseType: "json"
+    });
   }
 }

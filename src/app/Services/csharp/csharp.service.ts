@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { IDataClassService } from 'src/app/Interfaces/IDataClassService';
+import { ICsharpClass } from 'src/app/Models/CsharpClass';
 import { environment } from 'src/environments/environment.prod';
-import { CsharpField } from '../../Models/CsharpField';
+import { CsharpField, ICsharpField } from '../../Models/CsharpField';
 import { BaseService } from '../BaseService';
 
 @Injectable({
@@ -56,7 +57,7 @@ export class CsharpService extends BaseService {
         propertyAccessModifier: "private",
         accessors: new Map<string, any>(
           [
-            ["setter", { setterAttributes: "[Required]" }],
+            ["setter", { setterAttributes: "Required" }],
           ]
         ),
         propertyAttributes: "",
@@ -78,7 +79,7 @@ export class CsharpService extends BaseService {
           propertyAccessModifier: "protected",
           accessors: new Map<string, any>(
             [
-              ["getter", { getterAttributes: "[Required]" }]
+              ["getter", { getterAttributes: "Required" }]
             ]
           ),
           propertyAttributes: ""
@@ -140,5 +141,45 @@ export class CsharpService extends BaseService {
       return null;
 
     return this._fields[fieldIndex];
+  }
+
+  // Transforms csharp class to valid JSON without the loss of data
+  async transformObject(dataClassDescription: ICsharpClass): Promise<any> {
+
+    let dataClassDescriptionObject = {
+      language: dataClassDescription.language,
+      name: dataClassDescription.name,
+      namespace: dataClassDescription.namespace,
+      classAttributes: dataClassDescription.classAttributes,
+      Comment: dataClassDescription.comment,
+      fields: dataClassDescription.fields
+    };
+
+    dataClassDescriptionObject.fields = [] as ICsharpField[];
+
+    for (const field of dataClassDescription.fields) {
+      let fieldObject = {
+        name: field.name,
+        dataType: field.dataType,
+        defaultValue: field.defaultValue,
+        comment: field.comment,
+        fieldAttributes: field.fieldAttributes,
+        isConstructorParam: field.isConstructorParam,
+        accessModifier: field.accessModifier,
+
+        property: {
+          propertyName: field.property.propertyName,
+          propertyType: field.property.propertyType,
+          accessors: Object.fromEntries(field.property.accessors) as any,
+          propertyAttributes: field.property.propertyAttributes,
+          propertyAccessModifier: field.property.propertyAccessModifier
+        }
+      }
+
+      // Push the field object inside the dataClassDescriptionObject fields list
+      dataClassDescriptionObject.fields.push(fieldObject);
+    }
+
+    return dataClassDescriptionObject;
   }
 }

@@ -22,8 +22,9 @@ export interface IDataClassService {
 
   //! TODO
   // Submits the form for the data class details
-  // submitClassDescription(): any;
+  generateClass(dataClassDescription: any): any;
 
   // Emits the generated data class value
   dataClassResultSubject: Subject<any>;
+
 }

@@ -28,7 +28,7 @@ export class CsharpField implements ICsharpField {
   }
 }
 
-interface ICsharpField {
+export interface ICsharpField {
   name: string;
   dataType: string;
   accessModifier: string;
