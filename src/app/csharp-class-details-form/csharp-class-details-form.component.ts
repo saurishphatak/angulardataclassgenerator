@@ -2,8 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IDataClassDetailsFormComponent } from '../Interfaces/IDataClassLanguageComponent';
 import { CsharpClass } from '../Models/CsharpClass';
+import { LoaderService } from '../Services/common/loader.service';
 import { CsharpService } from '../Services/csharp/csharp.service';
-import { LoaderService } from '../Services/loader.service';
 
 let debug = console.log;
 @Component({
@@ -25,7 +25,8 @@ export class CsharpClassDetailsFormComponent implements OnInit, IDataClassDetail
     this.formGroup = formBuilder.group({
       name: new FormControl('', Validators.required),
       namespace: new FormControl(''),
-      classAttributes: new FormControl('')
+      classAttributes: new FormControl(''),
+      comment: new FormControl('')
     });
   }
 

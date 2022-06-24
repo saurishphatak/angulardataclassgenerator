@@ -27,6 +27,12 @@
         <textarea matInput formControlName="classAttributes"></textarea>
       </mat-form-field>
 
+      <!-- Class Comment -->
+      <mat-form-field>
+        <mat-label>Comment</mat-label>
+        <input type="text" matInput formControlName="comment">
+      </mat-form-field>
+
       <button type="button" mat-raised-button color="primary" (click)="this.gennerateClass()">Generate C# Class</button>
     </form>
   </mat-card-content>

@@ -5,7 +5,7 @@ import { IDataClassService } from 'src/app/Interfaces/IDataClassService';
 import { ICsharpClass } from 'src/app/Models/CsharpClass';
 import { environment } from 'src/environments/environment.prod';
 import { CsharpField, ICsharpField } from '../../Models/CsharpField';
-import { BaseService } from '../BaseService';
+import { BaseService } from '../common/BaseService';
 
 @Injectable({
   providedIn: 'root'

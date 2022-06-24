@@ -9,8 +9,8 @@ import { IDataClassDetailsFormComponent } from './Interfaces/IDataClassLanguageC
 import { MatSidenav } from '@angular/material/sidenav';
 import { IDataClassFieldDetailsFormComponent } from './Interfaces/IDataClassFieldDetailsFormComponent';
 import { IDataClassFieldsListComponent } from './Interfaces/IDataClassFieldsListComponent';
-import { LoaderService } from './Services/loader.service';
 import { Subscription } from 'rxjs';
+import { LoaderService } from './Services/common/loader.service';
 
 @Component({
   selector: 'app-root',

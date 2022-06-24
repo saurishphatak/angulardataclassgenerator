@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs";
+import { IDataClassService } from "src/app/Interfaces/IDataClassService";
 import { environment } from "src/environments/environment.prod";
-import { IDataClassService } from "../Interfaces/IDataClassService";
 
 export abstract class BaseService implements IDataClassService {
   debug = environment.production ? () => { } : console.log;

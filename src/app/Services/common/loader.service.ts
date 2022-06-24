@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ILoaderService } from '../Interfaces/ILoaderService';
+import { ILoaderService } from 'src/app/Interfaces/ILoaderService';
 
 @Injectable({
   providedIn: 'root'
