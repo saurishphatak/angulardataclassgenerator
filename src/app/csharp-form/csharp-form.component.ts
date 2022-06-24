@@ -197,9 +197,13 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
           name: nameFormControl?.value ?? "",
           dataType: dataTypeFormControl?.value ?? "public",
           accessModifier: this.formGroup.get("accessModifier")?.value,
-          defaultValue: this.formGroup.get("defaultValue")?.value ?? "",
-          comment: this.formGroup.get("comment")?.value ?? "",
-          fieldAttributes: this.formGroup.get("fieldAttributes")?.value ?? "",
+
+          //! Faulty. Need to get details from formGroup.extraDetails and not formGroup directly
+          defaultValue: this.formGroup.get("extraDetailsForm.defaultValue")?.value ?? "",
+          comment: this.formGroup.get("extraDetailsForm.comment")?.value ?? "",
+          fieldAttributes: this.formGroup.get("extraDetailsForm.fieldAttributes")?.value ?? "",
+
+
           isConstructorParam: this.isConstructorParam,
 
           property: new CsharpProperty(
@@ -223,19 +227,19 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
         let initializerAttributes = this.formGroup.get('propertyForm.initializerAttributes')?.value;
 
         if (this.isGetterEnabled) {
-          this.debug(`${this.className}::${functionName}`, getterAttributes);
+          this.debug(`${this.className}::${functionName}`, { getterAttributes });
 
           accessors.set('getter', { getterAttributes });
         }
 
         if (this.isSetterEnabled) {
-          this.debug(`${this.className}::${functionName}`, setterAttributes);
+          this.debug(`${this.className}::${functionName}`, { setterAttributes });
 
           accessors.set('setter', { setterAttributes });
         }
 
         if (this.isInitEnabled) {
-          this.debug(`${this.className}::${functionName}`, initializerAttributes);
+          this.debug(`${this.className}::${functionName}`, { initializerAttributes });
 
           accessors.set('initializer', { initializerAttributes });
         }
@@ -244,6 +248,8 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
         csharpField.property.propertyName = propertyNameFormControl?.value;
         csharpField.property.propertyType = this.formGroup.get("propertyForm.propertyType")?.value;
         csharpField.property.propertyAttributes = this.formGroup.get("propertyForm.propertyAttributes")?.value ?? "";
+
+        this.debug(`${this.className}::${functionName}`, csharpField);
 
         // Add the field to the list
         this.languageService.addField(csharpField);
@@ -254,6 +260,9 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
 
       // If the property is not to be generated
       else if (this.showPropertyConfig == false) {
+
+        this.debug(`${this.className}::${functionName}`, csharpField);
+
         // Add the new field to the list
         this.languageService.addField(csharpField);
 

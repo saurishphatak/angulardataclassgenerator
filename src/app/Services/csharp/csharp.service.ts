@@ -151,7 +151,7 @@ export class CsharpService extends BaseService {
       name: dataClassDescription.name,
       namespace: dataClassDescription.namespace,
       classAttributes: dataClassDescription.classAttributes,
-      Comment: dataClassDescription.comment,
+      comment: dataClassDescription.comment,
       fields: dataClassDescription.fields
     };
 
