@@ -57,7 +57,7 @@
       </mat-form-field>
 
       <!-- Property Details Accordion -->
-      <mat-accordion *ngIf="field.property.propertyName">
+      <mat-accordion *ngIf="field?.property?.propertyName && field.property.propertyName.length > 0">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>Property</mat-panel-title>
@@ -83,7 +83,7 @@
           </mat-form-field>
 
           <!-- Property Attributes -->
-          <mat-form-field>
+          <mat-form-field *ngIf="field?.property?.propertyAttributes && field.property.propertyAttributes.length > 0">
             <mat-label>Property Attributes</mat-label>
             <input type="text" matInput [value]="field.property.propertyAttributes" readonly>
           </mat-form-field>
