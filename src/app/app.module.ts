@@ -7,13 +7,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CsharpFormComponent } from './csharp-form/csharp-form.component';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csharp-field-details-list.component';
 import { ClassDetailsFormHostDirective } from './Directives/class-details-form-host.directive';
-import { CsharpClassDetailsFormComponent } from './csharp-class-details-form/csharp-class-details-form.component';
+import { CsharpClassDetailsFormComponent } from './csharp/csharp-class-details-form/csharp-class-details-form.component';
 import { FieldDetailsFormHostDirective } from './Directives/field-details-form-host.directive';
 import { FieldDetailsListHostDirective } from './Directives/field-details-list-host.directive';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -26,6 +24,8 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CsharpService } from './Services/csharp/csharp.service';
 import { NetworkInterceptor } from './network.interceptor';
+import { CsharpFormComponent } from './csharp/csharp-form/csharp-form.component';
+import { CsharpFieldDetailsListComponent } from './csharp/csharp-field-details-list/csharp-field-details-list.component';
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,8 +1,6 @@
 import { AfterViewInit, Component, ComponentRef, OnDestroy, OnInit, Type, ViewChild } from '@angular/core';
 import { ClassDetailsFormHostDirective } from './Directives/class-details-form-host.directive';
-import { CsharpClassDetailsFormComponent } from './csharp-class-details-form/csharp-class-details-form.component';
-import { CsharpFieldDetailsListComponent } from './csharp-field-details-list/csharp-field-details-list.component';
-import { CsharpFormComponent } from './csharp-form/csharp-form.component';
+import { CsharpClassDetailsFormComponent } from './csharp/csharp-class-details-form/csharp-class-details-form.component';
 import { FieldDetailsFormHostDirective } from './Directives/field-details-form-host.directive';
 import { FieldDetailsListHostDirective } from './Directives/field-details-list-host.directive';
 import { IDataClassDetailsFormComponent } from './Interfaces/IDataClassLanguageComponent';
@@ -11,6 +9,9 @@ import { IDataClassFieldDetailsFormComponent } from './Interfaces/IDataClassFiel
 import { IDataClassFieldsListComponent } from './Interfaces/IDataClassFieldsListComponent';
 import { Subscription } from 'rxjs';
 import { LoaderService } from './Services/common/loader.service';
+import { environment } from 'src/environments/environment.prod';
+import { CsharpFieldDetailsListComponent } from './csharp/csharp-field-details-list/csharp-field-details-list.component';
+import { CsharpFormComponent } from './csharp/csharp-form/csharp-form.component';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,9 @@ import { LoaderService } from './Services/common/loader.service';
 export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   className = "AppComponent";
-  debug = console.log;
+
+  private debug = !environment.production ? console.log : () => { };
+
 
   public constructor(
     public loaderSerice: LoaderService

@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IDataClassDetailsFormComponent } from '../Interfaces/IDataClassLanguageComponent';
-import { CsharpClass } from '../Models/CsharpClass';
-import { LoaderService } from '../Services/common/loader.service';
-import { CsharpService } from '../Services/csharp/csharp.service';
+import { IDataClassDetailsFormComponent } from '../../Interfaces/IDataClassLanguageComponent';
+import { CsharpClass } from '../../Models/CsharpClass';
+import { LoaderService } from '../../Services/common/loader.service';
+import { CsharpService } from '../../Services/csharp/csharp.service';
+import { saveAs } from "file-saver";
+import { environment } from 'src/environments/environment.prod';
 
-let debug = console.log;
 @Component({
   selector: 'app-csharp-class-details-form',
   templateUrl: './csharp-class-details-form.component.html',
@@ -15,6 +16,8 @@ export class CsharpClassDetailsFormComponent implements OnInit, IDataClassDetail
 
   className = "CsharpClassDetailsFormComponent";
 
+  private debug = !environment.production ? console.log : () => { };
+
   formGroup: FormGroup;
 
   constructor(
@@ -22,6 +25,8 @@ export class CsharpClassDetailsFormComponent implements OnInit, IDataClassDetail
     public languageService: CsharpService,
     public loaderService: LoaderService
   ) {
+    this.debug(`${this.className}::constructor()`, { loaderService, languageService });
+
     this.formGroup = formBuilder.group({
       name: new FormControl('', Validators.required),
       namespace: new FormControl(''),
@@ -36,13 +41,13 @@ export class CsharpClassDetailsFormComponent implements OnInit, IDataClassDetail
   public async gennerateClass() {
     let functionName = "generateClass()";
 
-    debug(`${this.className}::${functionName}`);
+    this.debug(`${this.className}::${functionName}`);
 
     let dataClassNameFormControl = this.formGroup.get("name");
 
     // The data class needs to have a class name
     if (!dataClassNameFormControl?.errors) {
-      console.log(`${this.className}::generateClass()::nameErrors`, dataClassNameFormControl?.errors);
+      this.debug(`${this.className}::generateClass()::nameErrors`, dataClassNameFormControl?.errors);
 
       let dataClassName = dataClassNameFormControl?.value;
 
@@ -63,7 +68,11 @@ export class CsharpClassDetailsFormComponent implements OnInit, IDataClassDetail
       let dataClassDescriptionObject = await this.languageService.transformObject(dataClassDescription);
 
       this.languageService.generateClass(dataClassDescriptionObject).subscribe(result => {
-        console.log(result);
+        // Download the file
+        let { fileName, data } = result as any;
+
+        saveAs(new Blob([data], { type: "text/plain;charset=utf-8" }), fileName);
+
         this.languageService.dataClassResultSubject.next(result);
       });
     }

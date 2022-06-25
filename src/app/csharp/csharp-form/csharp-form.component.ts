@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CsharpService } from '../Services/csharp/csharp.service';
-import { CsharpField } from '../Models/CsharpField';
-import { IDataClassFieldDetailsFormComponent } from '../Interfaces/IDataClassFieldDetailsFormComponent';
+import { IDataClassFieldDetailsFormComponent } from 'src/app/Interfaces/IDataClassFieldDetailsFormComponent';
+import { CsharpField } from 'src/app/Models/CsharpField';
+import { CsharpProperty } from 'src/app/Models/CsharpProperty';
+import { CsharpService } from 'src/app/Services/csharp/csharp.service';
 import { environment } from 'src/environments/environment.prod';
-import { CsharpProperty } from '../Models/CsharpProperty';
 
 @Component({
   selector: 'app-csharp-form',
@@ -158,7 +158,7 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
   constructor(
     public languageService: CsharpService
   ) {
-    this.debug(`${this.className}::constructo()`, languageService);
+    this.debug(`${this.className}::constructor()`, languageService);
   }
 
 

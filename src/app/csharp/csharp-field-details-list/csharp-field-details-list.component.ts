@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CsharpService } from '../Services/csharp/csharp.service';
-import { CsharpField } from '../Models/CsharpField';
-import { IDataClassDetailsFormComponent } from '../Interfaces/IDataClassLanguageComponent';
-import { IDataClassFieldsListComponent } from '../Interfaces/IDataClassFieldsListComponent';
+import { IDataClassFieldsListComponent } from 'src/app/Interfaces/IDataClassFieldsListComponent';
+import { CsharpService } from 'src/app/Services/csharp/csharp.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-csharp-field-details-list',
@@ -16,7 +15,8 @@ export class CsharpFieldDetailsListComponent implements OnInit, IDataClassFields
   ) { }
 
   private className = "CsharpFieldDetailsListComponent";
-  private debug = console.log;
+
+  private debug = !environment.production ? console.log : () => { };
 
   ngOnInit(): void {
   }
