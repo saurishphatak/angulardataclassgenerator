@@ -125,6 +125,10 @@ export class CsharpService extends BaseService {
 
   // Removes all the fields
   public removeAllFields() {
+    let functionName = `removeAllFields()`;
+
+    this.debug(`${this.className}::${functionName}`);
+
     this._fields = [];
   }
 }
