@@ -1,4 +1,5 @@
 export const environment = {
-  production: true,
-  baseURL: "https://data-class-generator-api.herokuapp.com"
+  production: false,
+  baseURL: "https://data-class-generator-api.herokuapp.com",
+  // baseURL: "http://localhost:3000"
 };
