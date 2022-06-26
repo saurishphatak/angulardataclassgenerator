@@ -20,11 +20,13 @@ export interface IDataClassService {
   // Returns all the fields
   get fields(): any[];
 
-  //! TODO
   // Submits the form for the data class details
   generateClass(dataClassDescription: any): any;
 
   // Emits the generated data class value
   dataClassResultSubject: Subject<any>;
+
+  // Removes all fields
+  removeAllFields(): any;
 
 }

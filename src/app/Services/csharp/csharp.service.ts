@@ -11,6 +11,7 @@ import { BaseService } from '../common/BaseService';
   providedIn: 'root'
 })
 export class CsharpService extends BaseService {
+
   protected override className = "CsharpService";
 
   override debug = environment.production ? () => { } : console.log;
@@ -120,5 +121,10 @@ export class CsharpService extends BaseService {
     }
 
     return dataClassDescriptionObject;
+  }
+
+  // Removes all the fields
+  public removeAllFields() {
+    this._fields = [];
   }
 }

@@ -73,6 +73,9 @@ export class CsharpClassDetailsFormComponent implements OnInit, IDataClassDetail
 
         saveAs(new Blob([data], { type: "text/plain;charset=utf-8" }), fileName);
 
+        // Remove all the fields from the service
+        this.languageService.removeAllFields();
+
         this.languageService.dataClassResultSubject.next(result);
       });
     }

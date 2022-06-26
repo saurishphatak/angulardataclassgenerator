@@ -14,6 +14,8 @@ export abstract class BaseService implements IDataClassService {
   public abstract updateField(id: number): any;
   public abstract getField(id: number): any;
   public abstract get fields(): any[];
+  public abstract removeAllFields(): any;
+
 
   public constructor(protected httpClient: HttpClient) {
     this.debug(`${this.className}::constructor()`, this.httpClient);
