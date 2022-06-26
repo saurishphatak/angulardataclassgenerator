@@ -26,68 +26,7 @@ export class CsharpService extends BaseService {
   override updateFieldSubject: Subject<CsharpField> = new Subject<CsharpField>();
 
   // Holds all the fields
-  protected _fields: CsharpField[] = [
-    new CsharpField({
-      name: "customerName",
-      dataType: "string",
-      defaultValue: "",
-      comment: "",
-      fieldAttributes: "Required",
-      accessModifier: "public",
-      property: {
-        propertyName: "",
-        propertyType: "virtual",
-        propertyAccessModifier: "public",
-        accessors: new Map<string, any>(),
-        propertyAttributes: ""
-      },
-      isConstructorParam: false,
-    }
-    ),
-    new CsharpField({
-      name: "phoneNumber",
-      dataType: "string",
-      defaultValue: "",
-      comment: "Customer phone number",
-      fieldAttributes: "",
-      accessModifier: "private",
-      property: {
-        propertyName: "PhoneNumber",
-        propertyType: "virtual",
-        propertyAccessModifier: "private",
-        accessors: new Map<string, any>(
-          [
-            ["setter", { setterAttributes: "Required" }],
-          ]
-        ),
-        propertyAttributes: "",
-      },
-      isConstructorParam: true
-    }
-    ),
-    new CsharpField(
-      {
-        name: "address",
-        dataType: "string",
-        defaultValue: "",
-        comment: "",
-        fieldAttributes: "",
-        accessModifier: "protected",
-        property: {
-          propertyName: "Address",
-          propertyType: "abstract",
-          propertyAccessModifier: "protected",
-          accessors: new Map<string, any>(
-            [
-              ["getter", { getterAttributes: "Required" }]
-            ]
-          ),
-          propertyAttributes: ""
-        },
-        isConstructorParam: true
-      }
-    )
-  ];
+  protected _fields: CsharpField[] = [];
 
   // Adds a new field to the collection
   addField(newField: any) {
