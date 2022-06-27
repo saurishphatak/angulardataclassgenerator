@@ -26,6 +26,7 @@ import { CsharpService } from './Services/csharp/csharp.service';
 import { NetworkInterceptor } from './network.interceptor';
 import { CsharpFormComponent } from './csharp/csharp-form/csharp-form.component';
 import { CsharpFieldDetailsListComponent } from './csharp/csharp-field-details-list/csharp-field-details-list.component';
+import { WebsiteFrontPageComponent } from './website-front-page/website-front-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +36,7 @@ import { CsharpFieldDetailsListComponent } from './csharp/csharp-field-details-l
     CsharpFieldDetailsListComponent,
     ClassDetailsFormHostDirective,
     CsharpClassDetailsFormComponent,
+    WebsiteFrontPageComponent,
   ],
   imports: [
     BrowserModule,

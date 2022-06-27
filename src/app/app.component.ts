@@ -25,6 +25,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   private debug = !environment.production ? console.log : () => { };
 
 
+  displayWebsiteCover = true;
+
   public constructor(
     public loaderSerice: LoaderService
   ) {
@@ -105,6 +107,9 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   // Will create new components containing the
   // that together will take care of the data class generation
   createLanguageComponents(language: string) {
+    // Hide the website cover
+    this.displayWebsiteCover = false;
+
     language = language.toLowerCase();
 
     // Create the form component
@@ -166,6 +171,9 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     this.languageDetailsFormHostDirective?.viewContainerRef.clear();
+
+    // Show the website cover
+    this.displayWebsiteCover = true;
   }
 
   toggleDrawer() {

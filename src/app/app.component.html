@@ -35,12 +35,18 @@
       <ng-template appFieldDetailsListHost></ng-template>
     </div>
 
+    <!-- Displays the loading spinner -->
     <ng-container *ngIf="this.showLoader">
       <div class="overlay">
         <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
       </div>
 
     </ng-container>
+
+  </div>
+
+  <div id="website-background-div" class="overlay" *ngIf="this.displayWebsiteCover">
+    <app-website-front-page></app-website-front-page>
   </div>
 
 </mat-drawer-container>

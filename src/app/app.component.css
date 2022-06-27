@@ -4,6 +4,8 @@
 
   height: calc(100vh - 8vh);
   overflow-y: scroll;
+
+  /* border: 1px solid black; */
 }
 
 #field-details-form-div {
@@ -66,7 +68,7 @@ mat-progress-spinner {
 
   backdrop-filter: blur(2px);
 
-  /* border: 1px solid green; */
+  border: 1px solid green;
 
   display: flex;
   align-items: center;
@@ -83,4 +85,18 @@ mat-drawer {
   margin: auto;
   padding: 10px;
   margin-top: 10px;
+}
+
+#website-background-div {
+  border: 1px solid black;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background-image: url("../assets/WebsiteBackground.jpeg");
+
+  height: calc(100vh - 8vh);
+
+  z-index: 9;
 }

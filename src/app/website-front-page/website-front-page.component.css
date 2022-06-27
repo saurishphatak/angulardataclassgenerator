@@ -1,0 +1,28 @@
+.website-front-page-heading {
+  font-size: 80px;
+  font-family: 'Courier New', Courier, monospace;
+
+  margin: 25px;
+
+  font-weight: bold;
+  /* color: #4F4789; */
+  /* color: #2C2C54; */
+  color: #E76F51;
+}
+
+#generator-text {
+  /* color: #19647E; */
+  color: #3D52D5;
+
+  font-weight: bold;
+}
+
+#website-front-page-heading-div {
+  /* border: 10px solid red; */
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+}
