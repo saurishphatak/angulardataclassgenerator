@@ -58,11 +58,11 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
 
   // Property configuration controls
   showPropertyConfig = false;
-  propertyConfigButtonColor = "primary";
+  propertyConfigButtonColor = "white";
 
   // Default value, comment, field attributes configuration controls
   showExtraConfig = false;
-  extraConfigButtonColor = "primary";
+  extraConfigButtonColor = "white";
 
   // Button active status for property type
   propertyTypeButtons = {
@@ -101,7 +101,7 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
         // private fields will allow property configuration
         // So, show the property config button and set its color based
         // on whether the showPropertyConfig flag is set to true
-        this.propertyConfigButtonColor = this.showPropertyConfig ? "warn" : "primary";
+        this.propertyConfigButtonColor = this.showPropertyConfig ? "warn" : "white";
 
         this.fieldAccessModifierButtons.protectedField = this.fieldAccessModifierButtons.publicField = false;
       }
@@ -112,7 +112,7 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
         // protected fields will allow property configuration
         // So, show the property config button and set its color based
         // on whether the showPropertyConfig flag is set to true
-        this.propertyConfigButtonColor = this.showPropertyConfig ? "warn" : "primary";
+        this.propertyConfigButtonColor = this.showPropertyConfig ? "warn" : "white";
 
         this.fieldAccessModifierButtons.privateField = this.fieldAccessModifierButtons.publicField = false;
       }
@@ -318,7 +318,7 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
 
     // Update the UI
     this.showPropertyConfig = false;
-    this.propertyConfigButtonColor = "primary";
+    this.propertyConfigButtonColor = "white";
     this.isGetterEnabled = this.isSetterEnabled = this.isInitEnabled = false;
     this.togglePropertyType('virtual');
     this.togglePropertyAccessModifier('public');
@@ -339,7 +339,7 @@ export class CsharpFormComponent implements OnInit, IDataClassFieldDetailsFormCo
 
     // Update the UI
     this.showExtraConfig = false;
-    this.extraConfigButtonColor = "primary";
+    this.extraConfigButtonColor = "white";
   }
 
   // Patches the form with the field details recieved from the

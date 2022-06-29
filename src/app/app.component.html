@@ -1,8 +1,8 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
   <button (click)="this.toggleDrawer()" mat-icon-button>
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Select Language</span>
+  <span>Select Progamming Language</span>
 </mat-toolbar>
 
 <mat-drawer-container>
@@ -10,7 +10,7 @@
     <div id="language-selection-buttons-div">
       <button type="button" class="language-button" *ngFor="let language of this.languageList"
         (click)="this.createLanguageComponents(language)" mat-flat-button color="primary">
-        {{ language }}
+        <!-- {{ language }} -->C#
       </button>
     </div>
   </mat-drawer>

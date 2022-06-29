@@ -12,5 +12,6 @@ export class WebsiteFrontPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  generatorText = "{GENERATOR}";
+  generatorText = "</ GENERATOR >";
+  dataClassHeadingText = "DATA CLASS";
 }

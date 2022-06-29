@@ -67,11 +67,13 @@
   <br>
 
   <!-- Whether to configure property and accessors -->
-  <button type="button" class="csharp-field-details-form-button" mat-flat-button
-    [color]="this.propertyConfigButtonColor" (click)="this.togglePropertyConfig($event)"
-    matTooltip="Add/remove property and accessors" matTooltipPosition="right">
-    Confugure Property
-  </button>
+  <div class="csharp-form-buttons-div">
+    <button type="button" class="csharp-field-details-form-button" mat-raised-button
+      [color]="this.propertyConfigButtonColor" (click)="this.togglePropertyConfig($event)"
+      matTooltip="Add/remove property and accessors" matTooltipPosition="right" class="csharp-form-buttons">
+      Configure Property
+    </button>
+  </div>
 
   <!-- Property Configurator -->
   <mat-card *ngIf="this.showPropertyConfig">
@@ -182,9 +184,12 @@
   </mat-card>
 
   <!-- Extra Details Configurator -->
-  <button type="button" class="csharp-field-details-form-button" mat-flat-button [color]="this.extraConfigButtonColor"
-    (click)="this.toggleExtraConfig()" matTooltip="Add/remove field comment, attributes and default value"
-    matTooltipPosition="right">Extra</button>
+  <div class="csharp-form-buttons-div">
+    <button type="button" class="csharp-field-details-form-button" mat-raised-button
+      [color]="this.extraConfigButtonColor" (click)="this.toggleExtraConfig()"
+      matTooltip="Add/remove field comment, attributes and default value" matTooltipPosition="right"
+      class="csharp-form-buttons">More...</button>
+  </div>
 
   <mat-card *ngIf="this.showExtraConfig">
     <div id="extra-config-div" formGroupName="extraDetailsForm">
@@ -211,8 +216,10 @@
   </mat-card>
 
   <!-- Add field button -->
-  <button id="add-field-button" class="csharp-field-details-form-button" (click)="onAddField()" type="button"
-    mat-flat-button color="primary" matTooltip="Add field" matTooltipPosition="right">
-    Add Field
-  </button>
+  <div class="csharp-form-buttons-div">
+    <button id="add-field-button" class="csharp-field-details-form-button" (click)="onAddField()" type="button"
+      mat-flat-button color="primary" matTooltip="Add field" matTooltipPosition="right" class="csharp-form-buttons">
+      Add Field
+    </button>
+  </div>
 </form>
